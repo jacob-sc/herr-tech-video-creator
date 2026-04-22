@@ -11,3 +11,4 @@ transcripts/
 *cookies.txt
 *.pem
 *.key
+.DS_Store
