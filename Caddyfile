@@ -1,0 +1,40 @@
+# Caddy mit Auto-SSL via Let's Encrypt.
+# Setzt DOMAIN-env (z.B. video-api.herrtechgpt.de).
+# 500MB Upload-Limit, 30min Timeouts für Rendering/Transkription.
+
+{$DOMAIN} {
+    encode zstd gzip
+
+    # Logs
+    log {
+        output stdout
+        format console
+    }
+
+    # Große Uploads (Video-Dateien)
+    request_body {
+        max_size 500MB
+    }
+
+    # Lange Laufzeiten für Transkription, Rendering, Export
+    @long path /api/upload /api/projects/*/process* /api/projects/*/export-video* /api/projects/*/export-status*
+    handle @long {
+        reverse_proxy worker:3000 {
+            transport http {
+                read_timeout 30m
+                write_timeout 30m
+                dial_timeout 30s
+            }
+        }
+    }
+
+    # Alles andere: normale Timeouts
+    handle {
+        reverse_proxy worker:3000 {
+            transport http {
+                read_timeout 2m
+                write_timeout 2m
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+# Video-Creator-Worker + Caddy (Reverse-Proxy mit Auto-SSL via Let's Encrypt)
+# Deploy auf Hetzner: `docker compose up -d --build`
+# Benötigt .env-Datei neben dieser compose-Datei.
+
+services:
+  worker:
+    build: .
+    restart: unless-stopped
+    expose:
+      - "3000"
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      FAL_KEY: ${FAL_KEY}
+      GOOGLE_GENAI_API_KEY: ${GOOGLE_GENAI_API_KEY}
+      # Optional: Google Cloud Vertex AI (Imagen-Fallback)
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
+      # CORS: erlaubte Origins (z.B. https://app.herrtechgpt.de,http://localhost:3001)
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+    volumes:
+      - worker-projects:/app/tmp/projects
+      - worker-uploads:/app/uploads
+      - worker-out:/app/out
+      # Für yt-dlp Cookies (optional, für YouTube/Instagram Rate-Limits)
+      - ./cookies:/app/cookies:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/api/check-env"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - worker
+
+volumes:
+  worker-projects:
+  worker-uploads:
+  worker-out:
+  caddy-data:
+  caddy-config:

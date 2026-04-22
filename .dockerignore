@@ -1,0 +1,16 @@
+node_modules
+.next
+.env
+.env.local
+.env.*.local
+tmp
+uploads
+out
+.git
+.gitignore
+*.log
+README.md
+Dockerfile
+docker-compose.yml
+Caddyfile
+scripts/hetzner-setup.sh
