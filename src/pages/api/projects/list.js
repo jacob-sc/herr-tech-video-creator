@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { PROJECTS_DIR } from '../../../lib/project';
-import { requireAuth } from '../../../lib/api-auth';
-import { isAdmin } from '../../../lib/api-auth';
-import { prisma } from '../../../lib/prisma';
+import { requireAuth, isAdmin } from '../../../lib/api-auth';
+import { supabase } from '../../../lib/supabase';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Nur GET' });
@@ -35,15 +34,19 @@ export default async function handler(req, res) {
   // Für Admins: Owner-Email zu jedem Projekt hinzufügen
   if (adminView) {
     const ownerIds = [...new Set(projects.map(p => p.ownerId).filter(Boolean))];
-    const users = ownerIds.length > 0
-      ? await prisma.user.findMany({ where: { id: { in: ownerIds } }, select: { id: true, email: true, name: true } })
-      : [];
-    const userMap = Object.fromEntries(users.map(u => [u.id, u]));
+    let userMap = {};
+    if (ownerIds.length > 0) {
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('id, email, full_name')
+        .in('id', ownerIds);
+      userMap = Object.fromEntries((profiles ?? []).map(u => [u.id, u]));
+    }
 
     const enriched = projects.map(p => ({
       ...p,
       ownerEmail: userMap[p.ownerId]?.email ?? null,
-      ownerName: userMap[p.ownerId]?.name ?? null,
+      ownerName: userMap[p.ownerId]?.full_name ?? null,
     }));
     return res.status(200).json({ projects: enriched });
   }

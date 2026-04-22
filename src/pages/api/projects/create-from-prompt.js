@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { createProject, updateProject } from '../../../lib/project';
 import { requireAuth } from '../../../lib/api-auth';
-import { prisma } from '../../../lib/prisma';
+import { incrementProjectsCreated } from '../../../lib/user-stats';
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -61,10 +61,7 @@ export default async function handler(req, res) {
 
   // Build project
   const project = createProject(ownerId);
-  await prisma.user.update({
-    where: { id: ownerId },
-    data: { projectsCreated: { increment: 1 } },
-  }).catch(() => {});
+  await incrementProjectsCreated(ownerId);
 
   let cursor = 0;
   const scenes = (parsed.scenes ?? []).map((s, i) => {

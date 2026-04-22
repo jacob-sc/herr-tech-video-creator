@@ -1,7 +1,7 @@
 import path from 'path';
 import { loadProject, updateProject, getProjectDir } from '../../../../../../lib/project';
 import { requireAuth, isAdmin } from '../../../../../../lib/api-auth';
-import { prisma } from '../../../../../../lib/prisma';
+import { incrementImagesGenerated } from '../../../../../../lib/user-stats';
 
 const { generateImagenPrompt } = require('../../../../../../lib/prompt-generator');
 const { generateImage } = require('../../../../../../lib/imagen');
@@ -173,7 +173,7 @@ export default async function handler(req, res) {
     updatedScenes[sceneIdx] = { ...freshScene, imagePrompt, imageFile: filename, imageApproved: false, imageHistory, imageStatus: null };
     updateProject(id, { scenes: updatedScenes });
 
-    await prisma.user.update({ where: { id: ownerId }, data: { imagesGenerated: { increment: 1 } } }).catch(() => {});
+    await incrementImagesGenerated(ownerId);
 
     return res.status(200).json({ ok: true, sceneId: sceneIdx, imagePrompt, imageFile: filename });
   } catch (err) {

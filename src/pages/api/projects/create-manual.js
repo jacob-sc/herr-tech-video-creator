@@ -1,6 +1,6 @@
 import { createProject, updateProject } from '../../../lib/project';
 import { requireAuth } from '../../../lib/api-auth';
-import { prisma } from '../../../lib/prisma';
+import { incrementProjectsCreated } from '../../../lib/user-stats';
 
 /**
  * Creates a blank project without any video — user adds scenes manually.
@@ -28,10 +28,7 @@ export default async function handler(req, res) {
     },
   });
 
-  await prisma.user.update({
-    where: { id: ownerId },
-    data: { projectsCreated: { increment: 1 } },
-  }).catch(() => {});
+  await incrementProjectsCreated(ownerId);
 
   return res.status(200).json({ projectId: project.id });
 }

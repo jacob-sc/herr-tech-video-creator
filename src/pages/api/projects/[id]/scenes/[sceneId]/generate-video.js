@@ -1,7 +1,7 @@
 import path from 'path';
 import { loadProject, updateProject, getProjectDir } from '../../../../../../lib/project';
 import { requireAuth, isAdmin } from '../../../../../../lib/api-auth';
-import { prisma } from '../../../../../../lib/prisma';
+import { incrementVideosGenerated } from '../../../../../../lib/user-stats';
 
 const { uploadImageToFal, submitVideoJob, submitVeo3Job, getFalDuration, getVeo3Duration } = require('../../../../../../lib/fal-video');
 const fs = require('fs');
@@ -98,7 +98,7 @@ export default async function handler(req, res) {
     };
     updateProject(id, { scenes: updatedScenes });
 
-    await prisma.user.update({ where: { id: ownerId }, data: { videosGenerated: { increment: 1 } } }).catch(() => {});
+    await incrementVideosGenerated(ownerId);
 
     return res.status(200).json({ ok: true, requestId, videoPrompt });
   } catch (err) {

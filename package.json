@@ -1,6 +1,6 @@
 {
-  "name": "herr-tech-video-creator",
-  "version": "0.1.0",
+  "name": "herr-tech-video-creator-worker",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
@@ -13,24 +13,20 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
-    "@auth/prisma-adapter": "^2.11.1",
     "@fal-ai/client": "^1.9.5",
     "@google/genai": "^1.47.0",
-    "@prisma/client": "^5.22.0",
     "@remotion/cli": "^4.0.185",
     "@remotion/player": "^4.0.185",
+    "@supabase/supabase-js": "^2.45.4",
     "fluent-ffmpeg": "^2.1.3",
     "form-data": "^4.0.0",
     "formidable": "^3.5.4",
     "next": "^14.2.5",
-    "next-auth": "^4.24.13",
-    "nodemailer": "^8.0.5",
     "openai": "^4.52.7",
     "react": "^18",
     "react-dom": "^18",
     "remotion": "^4.0.185",
-    "resend": "^6.10.0",
-    "zod": "^4.3.6"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.24",
@@ -41,7 +37,6 @@
     "eslint": "^8",
     "eslint-config-next": "^14.2.5",
     "postcss": "^8",
-    "prisma": "^5.22.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
