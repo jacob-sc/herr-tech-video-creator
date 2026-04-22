@@ -15,9 +15,11 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       FAL_KEY: ${FAL_KEY}
-      GOOGLE_GENAI_API_KEY: ${GOOGLE_GENAI_API_KEY}
-      # Optional: Google Cloud Vertex AI (Imagen-Fallback)
+      # Google AI Studio (Gemini 3 Pro Image a.k.a. "nano banana" + 2.5 Flash Image Fallback)
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      # Optional: Google Cloud Vertex AI (Imagen-Fallback, nur wenn ADC + Projekt da)
       GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT:-}
+      GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION:-us-central1}
       GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-}
       # CORS: erlaubte Origins (z.B. https://app.herrtechgpt.de,http://localhost:3001)
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
