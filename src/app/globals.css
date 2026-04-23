@@ -31,10 +31,12 @@
   --subtle:    #ECE6DE;
   --text:      #1a1a1e;
   --muted:     #6b6b72;
-  --accent:    #8b51e0;
-  --accent-hover:#7a3fd0;
-  --accent-bg: rgba(139,81,224,0.08);
-  --accent-brd: rgba(139,81,224,0.28);
+  /* Herr-Tech-Lila — identisch zu Dark-Mode, identisch zu Herr Tech World.
+     KEIN Tailwind-Purple, KEIN dunkleres Violett. */
+  --accent:    #B598E2;
+  --accent-hover:#9b51e0;
+  --accent-bg: rgba(181,152,226,0.12);
+  --accent-brd: rgba(181,152,226,0.35);
   --green:     #16a34a;
   --green-bg:  rgba(22,163,74,0.08);
   --green-brd: rgba(22,163,74,0.28);
