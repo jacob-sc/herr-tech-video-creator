@@ -69,13 +69,43 @@ function extractRefreshToken(req) {
 }
 
 async function requireAuth(req, res) {
-  const token = extractBearerToken(req) || extractCookieToken(req);
+  let token = extractBearerToken(req) || extractCookieToken(req);
+  const refreshToken = extractRefreshToken(req);
+
+  // Kein Access-Token mehr, aber ein Refresh-Token da → Session refreshen,
+  // neue Cookies setzen, mit dem frischen Access-Token weitermachen.
+  if (!token && refreshToken) {
+    const refreshed = await tryRefresh(refreshToken);
+    if (refreshed) {
+      setAuthCookies(res, {
+        accessToken: refreshed.access_token,
+        refreshToken: refreshed.refresh_token || refreshToken,
+        maxAge: refreshed.expires_in ?? 60 * 60,
+      });
+      token = refreshed.access_token;
+    }
+  }
+
   if (!token) {
     res.status(401).json({ error: 'Nicht autorisiert (kein Token)' });
     return { session: null, ownerId: null };
   }
 
-  const { data, error } = await supabase.auth.getUser(token);
+  let { data, error } = await supabase.auth.getUser(token);
+
+  // Access-Token ist zwar da, aber expired/ungültig — einmal via Refresh retry.
+  if ((error || !data?.user) && refreshToken) {
+    const refreshed = await tryRefresh(refreshToken);
+    if (refreshed) {
+      setAuthCookies(res, {
+        accessToken: refreshed.access_token,
+        refreshToken: refreshed.refresh_token || refreshToken,
+        maxAge: refreshed.expires_in ?? 60 * 60,
+      });
+      ({ data, error } = await supabase.auth.getUser(refreshed.access_token));
+    }
+  }
+
   if (error || !data?.user) {
     res.status(401).json({ error: 'Nicht autorisiert (Token ungültig)' });
     return { session: null, ownerId: null };
@@ -103,6 +133,24 @@ async function requireAuth(req, res) {
 
 function isAdmin(session) {
   return session?.user?.role === 'admin';
+}
+
+/**
+ * Versucht mit dem Refresh-Token eine neue Session zu holen.
+ * Gibt bei Erfolg { access_token, refresh_token, expires_in } zurück, sonst null.
+ */
+async function tryRefresh(refreshToken) {
+  try {
+    const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
+    if (error || !data?.session?.access_token) return null;
+    return {
+      access_token: data.session.access_token,
+      refresh_token: data.session.refresh_token,
+      expires_in: data.session.expires_in,
+    };
+  } catch {
+    return null;
+  }
 }
 
 function requirePremium(session) {

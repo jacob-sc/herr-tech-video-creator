@@ -6,6 +6,9 @@
   --border:    #2a2a35;
   --border-light:#3a3a48;
   --subtle:    #22222b;
+  /* Media-Panels (Bild-Slots, Video-Preview). Bleibt auch im Light-Mode
+     etwas dunkler als der Hintergrund, damit Bild-Inhalte Kontrast haben. */
+  --media-bg:  #080808;
   --text:      #ffffff;
   --muted:     #8a8a95;
   --accent:    #B598E2;
@@ -31,6 +34,9 @@
   --border:    #E3DED5;
   --border-light:#D0CAC0;
   --subtle:    #ECE6DE;
+  /* Im Light-Mode ein warmes helles Grau statt Schwarz — sonst wirken die
+     Bild-Slots wie Löcher im Layout. */
+  --media-bg:  #E8E2D8;
   --text:      #1a1a1e;
   --muted:     #6b6b72;
   /* Herr-Tech-Lila — identisch zu Dark-Mode, identisch zu Herr Tech World.

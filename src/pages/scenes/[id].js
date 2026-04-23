@@ -193,7 +193,7 @@ export default function ScenesPage() {
               {/* Global style toggle — always leftmost */}
               <button
                 onClick={() => setShowGlobalStyle(v => !v)}
-                style={{ background: showGlobalStyle ? T.accentBg : `linear-gradient(135deg, #3a2f52, #2a2040)`, border:`1px solid ${showGlobalStyle ? T.accentBrd : T.accentBrd}`, borderRadius:9999, color: showGlobalStyle ? T.accent : T.accent, fontWeight:700, fontSize:13, padding:'8px 18px', cursor:'pointer', display:'flex', alignItems:'center', gap:7, transition:'all .15s' }}
+                style={{ background: T.accentBg, border:`1px solid ${T.accentBrd}`, borderRadius:9999, color: T.accent, fontWeight:700, fontSize:13, padding:'8px 18px', cursor:'pointer', display:'flex', alignItems:'center', gap:7, transition:'all .15s' }}
                 title="Gestaltungsvorgaben für alle Generierungen">
                 🎨 Stil-Vorgaben{(globalStyleText.trim() || setupStyleDesc.trim() || setupStyleImagePreview) ? ' ✓' : ''}
               </button>
@@ -683,7 +683,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
       <div style={{ display:'flex', minHeight:180 }}>
 
         {/* ── Links: 3 Portrait-Screenshots nebeneinander ── */}
-        <div style={{ width:screenshotColWidth, flexShrink:0, background:'#080808', borderRight:`1px solid ${T.border}`, padding:10, display:'flex', flexDirection:'column', gap:6 }}>
+        <div style={{ width:screenshotColWidth, flexShrink:0, background:T.mediaBg, borderRight:`1px solid ${T.border}`, padding:10, display:'flex', flexDirection:'column', gap:6 }}>
           <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:2 }}>
             <div style={{ fontSize:9, fontWeight:700, color: scene.manual ? T.accent : T.muted, letterSpacing:'0.5px', textTransform:'uppercase' }}>
               {scene.manual ? '✦ Manuelle Szene' : 'Referenz wählen'}
@@ -1033,7 +1033,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
         </div>
 
         {/* ── Rechts: Generiertes Bild + History-Navigation ── */}
-        <div style={{ width: format==='9:16' ? 110 : 180, flexShrink:0, background:'#080808', display:'flex', flexDirection:'column', alignItems:'stretch', justifyContent:'stretch', overflow:'hidden', position:'relative' }}>
+        <div style={{ width: format==='9:16' ? 110 : 180, flexShrink:0, background:T.mediaBg, display:'flex', flexDirection:'column', alignItems:'stretch', justifyContent:'stretch', overflow:'hidden', position:'relative' }}>
           {/* Image or placeholder */}
           <div style={{ flex:1, position:'relative', minHeight:0 }}
             onDragOver={e => { e.preventDefault(); e.stopPropagation(); }}
@@ -1113,7 +1113,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
           )}
           {/* Upload custom image button */}
           {!generating && (
-            <div style={{ borderTop:`1px solid ${T.border}`, background:'#060606', padding:'4px 6px', display:'flex', justifyContent:'center' }}>
+            <div style={{ borderTop:`1px solid ${T.border}`, background:T.mediaBg, padding:'4px 6px', display:'flex', justifyContent:'center' }}>
               <button
                 onClick={() => customUploadRef.current?.click()}
                 disabled={uploadingCustom}

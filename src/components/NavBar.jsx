@@ -22,7 +22,6 @@ export default function NavBar({ rightSlot, showProjectsButton = true, currentPa
 
   const backHref = readBackCookie() || 'https://world.herr.tech/dashboard/ki-toolbox';
   const isAdmin = session?.user?.role === 'admin';
-  const adminHref = deriveAdminHref(backHref);
 
   return (
     <nav style={{
@@ -70,8 +69,8 @@ export default function NavBar({ rightSlot, showProjectsButton = true, currentPa
         {rightSlot}
         {isAdmin && (
           <a
-            href={adminHref}
-            title="Zurück zum Admin-Dashboard auf Herr Tech World"
+            href="/admin"
+            title="Admin-Bereich (Video Creator)"
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '6px 12px', borderRadius: 9999,
@@ -153,16 +152,3 @@ function readBackCookie() {
   try { return decodeURIComponent(m[1]); } catch { return null; }
 }
 
-/**
- * Leitet die /admin-URL auf der herrtechgpt-Seite aus dem Back-Cookie ab.
- * Beispiel: "https://world.herr.tech/dashboard/ki-toolbox" → "https://world.herr.tech/admin".
- * Fallback: Live-World (world.herr.tech/admin).
- */
-function deriveAdminHref(backHref) {
-  try {
-    const u = new URL(backHref);
-    return `${u.origin}/admin`;
-  } catch {
-    return 'https://world.herr.tech/admin';
-  }
-}
