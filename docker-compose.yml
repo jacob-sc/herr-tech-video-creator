@@ -24,7 +24,7 @@ services:
       # CORS: erlaubte Origins (z.B. https://app.herrtechgpt.de,http://localhost:3001)
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
     volumes:
-      - worker-projects:/app/tmp/projects
+      - worker-projects:/app/data/projects
       - worker-uploads:/app/uploads
       - worker-out:/app/out
       # Für yt-dlp Cookies (optional, für YouTube/Instagram Rate-Limits)
