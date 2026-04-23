@@ -368,7 +368,7 @@ export default function SetupPage() {
             <button onClick={saveSetup} disabled={saving} style={{
               flex: 1, padding: '17px', borderRadius: 9999,
               background: saving ? T.subtle : T.btn,
-              color: saving ? T.muted : '#fff',
+              color: saving ? T.muted : T.text,
               border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
               cursor: saving ? 'not-allowed' : 'pointer', transition: 'all .2s',
             }}>
@@ -388,7 +388,7 @@ function Section({ title, children }) {
       <h2 style={{ fontSize: 13, fontWeight: 700, color: '#B598E2', letterSpacing: '1px', textTransform: 'uppercase', margin: '0 0 16px' }}>
         {title}
       </h2>
-      <div style={{ background: '#111111', border: '1px solid #1e1e1e', borderRadius: 16, padding: '24px' }}>
+      <div style={{ background: T.card, border: '1px solid #1e1e1e', borderRadius: 16, padding: '24px' }}>
         {children}
       </div>
     </div>
@@ -397,8 +397,8 @@ function Section({ title, children }) {
 
 function LoadingScreen() {
   return (
-    <div style={{ minHeight: '100vh', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ color: '#666', fontSize: 14 }}>Lade Projekt…</div>
+    <div style={{ minHeight: '100vh', background: T.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ color: T.muted, fontSize: 14 }}>Lade Projekt…</div>
     </div>
   );
 }

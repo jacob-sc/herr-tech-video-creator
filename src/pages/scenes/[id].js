@@ -205,7 +205,7 @@ export default function ScenesPage() {
                   style={{
                     background: generatingAll ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
                     border: `1px solid ${T.accentBrd}`,
-                    borderRadius:9999, color: generatingAll ? T.accent : '#000',
+                    borderRadius:9999, color: generatingAll ? T.accent : T.bg,
                     fontWeight:700, fontSize:13, padding:'8px 18px', cursor: generatingAll ? 'default' : 'pointer',
                     display:'flex', alignItems:'center', gap:7, transition:'all .15s', opacity: generatingAll ? 0.8 : 1,
                   }}>
@@ -226,7 +226,7 @@ export default function ScenesPage() {
                   style={{
                     background: approvingAll ? T.greenBg : `linear-gradient(135deg, ${T.green}, #16a34a)`,
                     border: `1px solid ${T.greenBrd}`,
-                    borderRadius:9999, color: approvingAll ? T.green : '#000',
+                    borderRadius:9999, color: approvingAll ? T.green : T.bg,
                     fontWeight:700, fontSize:13, padding:'8px 18px', cursor: approvingAll ? 'default' : 'pointer',
                     display:'flex', alignItems:'center', gap:7, transition:'all .15s',
                   }}>
@@ -246,7 +246,7 @@ export default function ScenesPage() {
               {withImageCount > 0 && (
                 <button
                   onClick={() => router.push(`/videos/${id}`)}
-                  style={{ marginLeft:'auto', background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:'#fff', fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                  style={{ marginLeft:'auto', background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                   Weiter → Videos
                 </button>
               )}
@@ -290,9 +290,9 @@ export default function ScenesPage() {
                     </div>
                     {setupStyleImagePreview && (
                       <button onClick={() => setSetupStyleImagePreview(null)}
-                        style={{ width:'100%', marginTop:4, background:'none', border:'none', color:'#444', cursor:'pointer', fontSize:10 }}
+                        style={{ width:'100%', marginTop:4, background:'none', border:'none', color:T.muted, cursor:'pointer', fontSize:10 }}
                         onMouseEnter={e => e.currentTarget.style.color = T.red}
-                        onMouseLeave={e => e.currentTarget.style.color = '#444'}>✕ entfernen</button>
+                        onMouseLeave={e => e.currentTarget.style.color = T.muted}>✕ entfernen</button>
                     )}
                   </div>
                   <div style={{ flex:1 }}>
@@ -320,7 +320,7 @@ export default function ScenesPage() {
                       </>)}
                       <div style={{ flex:1 }} />
                       <button onClick={saveSetup} disabled={savingSetup}
-                        style={{ background: T.accent, border:'none', borderRadius:9999, color:'#000', fontSize:11, fontWeight:700, padding:'4px 14px', cursor: savingSetup ? 'default' : 'pointer', opacity: savingSetup ? 0.7 : 1 }}>
+                        style={{ background: T.accent, border:'none', borderRadius:9999, color:T.bg, fontSize:11, fontWeight:700, padding:'4px 14px', cursor: savingSetup ? 'default' : 'pointer', opacity: savingSetup ? 0.7 : 1 }}>
                         {savingSetup ? '…' : '💾 Speichern'}
                       </button>
                     </div>
@@ -391,7 +391,7 @@ export default function ScenesPage() {
             {withImageCount > 0 && (
               <button
                 onClick={() => router.push(`/videos/${id}`)}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:'#fff', fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                 Weiter → Videos
               </button>
             )}
@@ -701,7 +701,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 {useScreenshotRef ? '📸 Mit Referenz' : '✨ Nur Prompt'}
               </button>
               {/* Tooltip */}
-              <div data-tip style={{ display:'none', position:'absolute', top:'calc(100% + 6px)', right:0, zIndex:50, width:240, background:'#1a1a1a', border:`1px solid ${T.border}`, borderRadius:10, padding:'10px 12px', fontSize:11, color:'#ccc', lineHeight:1.5, pointerEvents:'none' }}>
+              <div data-tip style={{ display:'none', position:'absolute', top:'calc(100% + 6px)', right:0, zIndex:50, width:240, background:T.border, border:`1px solid ${T.border}`, borderRadius:10, padding:'10px 12px', fontSize:11, color:T.text, lineHeight:1.5, pointerEvents:'none' }}>
                 {useScreenshotRef
                   ? <><span style={{ color:T.green, fontWeight:700 }}>📸 Mit Bild-Referenz</span><br />Prompt wird aus dem Screenshot und deinem Input generiert. Das ausgewählte Bild wird zusätzlich als visuelle Referenz an Imagen übergeben — das Ergebnis bleibt näher am Original.</>
                   : <><span style={{ color:T.accent, fontWeight:700 }}>✨ Nur Prompt</span><br />Prompt wird aus dem Screenshot und deinem Input erstellt. Imagen generiert das Bild aber ohne visuelle Referenz — mehr kreative Freiheit, weniger Bindung ans Original.</>
@@ -719,12 +719,12 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 return (
                   <div
                     onClick={() => setSelectedExternalRef(isSelected ? null : { projectId, imageFile: prevScene.imageFile, url, label: '← Vorherige' })}
-                    style={{ flex:1, position:'relative', borderRadius:8, overflow:'hidden', cursor:'pointer', border:`2px solid ${isSelected ? T.accent : '#1a1a1a'}`, transition:'border-color .15s' }}>
+                    style={{ flex:1, position:'relative', borderRadius:8, overflow:'hidden', cursor:'pointer', border:`2px solid ${isSelected ? T.accent : T.border}`, transition:'border-color .15s' }}>
                     <div style={{ width:'100%', aspectRatio:'9/16', position:'relative', overflow:'hidden' }}>
                       <img src={url} alt="Vorherige Szene" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }} />
                     </div>
                     <div style={{ position:'absolute', bottom:3, left:0, right:0, textAlign:'center', fontSize:8, color:'rgba(255,255,255,0.6)', fontWeight:700, background:'rgba(0,0,0,0.5)' }}>← Vorh.</div>
-                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:'#fff', fontWeight:900 }}>✓</div>}
+                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:T.text, fontWeight:900 }}>✓</div>}
                   </div>
                 );
               })()}
@@ -735,12 +735,12 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 return (
                   <div
                     onClick={() => setSelectedExternalRef(isSelected ? null : { projectId, imageFile: nextScene.imageFile, url, label: 'Nächste →' })}
-                    style={{ flex:1, position:'relative', borderRadius:8, overflow:'hidden', cursor:'pointer', border:`2px solid ${isSelected ? T.accent : '#1a1a1a'}`, transition:'border-color .15s' }}>
+                    style={{ flex:1, position:'relative', borderRadius:8, overflow:'hidden', cursor:'pointer', border:`2px solid ${isSelected ? T.accent : T.border}`, transition:'border-color .15s' }}>
                     <div style={{ width:'100%', aspectRatio:'9/16', position:'relative', overflow:'hidden' }}>
                       <img src={url} alt="Nächste Szene" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }} />
                     </div>
                     <div style={{ position:'absolute', bottom:3, left:0, right:0, textAlign:'center', fontSize:8, color:'rgba(255,255,255,0.6)', fontWeight:700, background:'rgba(0,0,0,0.5)' }}>Nächste →</div>
-                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:'#fff', fontWeight:900 }}>✓</div>}
+                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:T.text, fontWeight:900 }}>✓</div>}
                   </div>
                 );
               })()}
@@ -772,9 +772,9 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                     });
                     onUpdate();
                   }}
-                  style={{ background:'none', border:'none', color:'#333', cursor:'pointer', fontSize:11, padding:'2px 4px' }}
+                  style={{ background:'none', border:'none', color:T.muted, cursor:'pointer', fontSize:11, padding:'2px 4px' }}
                   onMouseEnter={e => e.currentTarget.style.color = T.red}
-                  onMouseLeave={e => e.currentTarget.style.color = '#333'}
+                  onMouseLeave={e => e.currentTarget.style.color = T.muted}
                   title="Eigenes Referenzbild entfernen">✕</button>
               </div>
             );
@@ -788,7 +788,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
               const labels = ['A','B','C'];
               const splitFractions = [0.25, 0.5, 0.75];
               return (
-                <div key={file} style={{ flex:1, position:'relative', borderRadius:8, overflow:'hidden', border:`2px solid ${isSplitTarget ? '#f59e0b' : isSelected ? T.accent : '#1a1a1a'}`, opacity:selecting?0.6:1, transition:'all .15s' }}>
+                <div key={file} style={{ flex:1, position:'relative', borderRadius:8, overflow:'hidden', border:`2px solid ${isSplitTarget ? '#f59e0b' : isSelected ? T.accent : T.border}`, opacity:selecting?0.6:1, transition:'all .15s' }}>
                   {/* Aspect-ratio Box — maxHeight keeps cards uniform even with 1 screenshot */}
                   <div onClick={() => selectScreenshot(file)} style={{ width:'100%', aspectRatio:thumbAspect, maxHeight:160, position:'relative', overflow:'hidden', cursor:'pointer' }}>
                     <img src={url} alt={labels[k] ?? String(k+1)}
@@ -796,7 +796,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       onError={e => { e.target.style.opacity='0.15'; }} />
                   </div>
                   {isSelected && !isSplitTarget && (
-                    <div style={{ position:'absolute', top:4, right:4, background:T.accent, borderRadius:'50%', width:16, height:16, display:'flex', alignItems:'center', justifyContent:'center', fontSize:9, color:'#fff', fontWeight:900 }}>✓</div>
+                    <div style={{ position:'absolute', top:4, right:4, background:T.accent, borderRadius:'50%', width:16, height:16, display:'flex', alignItems:'center', justifyContent:'center', fontSize:9, color:T.text, fontWeight:900 }}>✓</div>
                   )}
                   <div style={{ position:'absolute', bottom:3, left:5, fontSize:9, color:'rgba(255,255,255,0.5)', fontWeight:700 }}>{labels[k] ?? String(k+1)}</div>
                   {/* ✂ Split-Button */}
@@ -812,7 +812,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       setErr('');
                     }}
                     title="Neue Szene ab diesem Screenshot erstellen"
-                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.6)', border:`1px solid ${isSplitTarget ? '#f59e0b' : '#333'}`, borderRadius:4, color: isSplitTarget ? '#000' : '#aaa', fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
+                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.6)', border:`1px solid ${isSplitTarget ? '#f59e0b' : T.muted}`, borderRadius:4, color: isSplitTarget ? T.bg : T.muted, fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
                     ✂
                   </button>
                   {/* → Video: use this screenshot directly as the scene image */}
@@ -867,7 +867,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       onUpdate();
                     } finally { setSavingTimes(false); }
                   }} disabled={savingTimes}
-                    style={{ background:T.accent, border:'none', borderRadius:9999, color:'#000', fontSize:10, fontWeight:700, padding:'3px 9px', cursor:'pointer' }}>
+                    style={{ background:T.accent, border:'none', borderRadius:9999, color:T.bg, fontSize:10, fontWeight:700, padding:'3px 9px', cursor:'pointer' }}>
                     {savingTimes ? '…' : '✓'}
                   </button>
                   <button onClick={() => { setEditingTimes(false); setEditStart(String(scene.start)); setEditEnd(String(scene.end)); }}
@@ -882,7 +882,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 </span>
               )}
               <span style={{ fontSize:11, color:T.muted }}>{duration}s</span>
-              <span style={{ fontSize:11, fontWeight:700, color:'#fff', background:T.subtle, padding:'1px 7px', borderRadius:5 }}>#{scene.id+1}</span>
+              <span style={{ fontSize:11, fontWeight:700, color:T.text, background:T.subtle, padding:'1px 7px', borderRadius:5 }}>#{scene.id+1}</span>
               {scene.imageApproved && <span style={{ fontSize:11, color:T.green, fontWeight:700 }}>✓ freigegeben</span>}
                 {/* Script-Edit Button — nur für normale Szenen */}
               {!scene.manual && (
@@ -932,8 +932,8 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
               </div>
             ) : (
               scene.text
-                ? <p style={{ margin:0, fontSize:13, color:'#ccc', lineHeight:1.6, display:'-webkit-box', WebkitLineClamp:5, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{scene.text}</p>
-                : <p style={{ margin:0, fontSize:13, color:'#444', fontStyle:'italic' }}>Keine Sprache / Musik / Stille</p>
+                ? <p style={{ margin:0, fontSize:13, color:T.text, lineHeight:1.6, display:'-webkit-box', WebkitLineClamp:5, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{scene.text}</p>
+                : <p style={{ margin:0, fontSize:13, color:T.muted, fontStyle:'italic' }}>Keine Sprache / Musik / Stille</p>
             ))}
 
             {/* ── Manuelle Szene: Skript + Was soll generiert werden (mit Referenzbild) ── */}
@@ -943,7 +943,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 {scene.text ? (
                   <div>
                     <div style={{ fontSize:9, fontWeight:700, color:T.muted, letterSpacing:'0.5px', textTransform:'uppercase', marginBottom:3 }}>Skript</div>
-                    <p style={{ margin:0, fontSize:12, color:'#555', lineHeight:1.5, fontStyle:'italic' }}>{scene.text}</p>
+                    <p style={{ margin:0, fontSize:12, color:T.muted, lineHeight:1.5, fontStyle:'italic' }}>{scene.text}</p>
                   </div>
                 ) : null}
 
@@ -951,7 +951,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 <div style={{ background:'rgba(181,152,226,0.07)', border:`1px solid ${T.accentBrd}`, borderRadius:10, padding:'9px 12px' }}>
                   <div style={{ fontSize:9, fontWeight:700, color:T.accent, letterSpacing:'0.5px', textTransform:'uppercase', marginBottom:7 }}>
                     ⚡ Was soll generiert werden?
-                    <span style={{ color:'#444', fontWeight:400, textTransform:'none', letterSpacing:0, fontSize:9 }}> — Primär-Input + optionales Referenzbild</span>
+                    <span style={{ color:T.muted, fontWeight:400, textTransform:'none', letterSpacing:0, fontSize:9 }}> — Primär-Input + optionales Referenzbild</span>
                   </div>
                   <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
                     <AdjustImageUpload
@@ -983,7 +983,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
           {!scene.manual && <div style={{ marginTop:10, borderTop:`1px solid ${T.border}`, paddingTop:8 }}>
             <div style={{ fontSize:9, fontWeight:700, color:T.muted, letterSpacing:'0.5px', textTransform:'uppercase', marginBottom:5 }}>
               Szene anpassen
-              <span style={{ color:'#2a2a2a', fontWeight:400, textTransform:'none', letterSpacing:0 }}> — Referenzbild + Text werden dem Prompt hinzugefügt</span>
+              <span style={{ color:T.borderLight, fontWeight:400, textTransform:'none', letterSpacing:0 }}> — Referenzbild + Text werden dem Prompt hinzugefügt</span>
             </div>
             <div style={{ display:'flex', gap:8, alignItems:'flex-start' }}>
               <AdjustImageUpload
@@ -1048,7 +1048,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
               <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center' }}>
                 <div style={{ textAlign:'center', padding:12 }}>
                   <div style={{ fontSize:18, opacity:.25 }}>🖼</div>
-                  <div style={{ fontSize:9, color:'#333', marginTop:3 }}>kein Bild</div>
+                  <div style={{ fontSize:9, color:T.muted, marginTop:3 }}>kein Bild</div>
                 </div>
               </div>
             )}
@@ -1064,7 +1064,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
             {/* History: "altes Bild" label */}
             {isViewingOldImage && !generating && (
               <div style={{ position:'absolute', top:4, left:0, right:0, display:'flex', justifyContent:'center' }}>
-                <span style={{ fontSize:8, fontWeight:700, color:'#fff', background:'rgba(0,0,0,0.7)', borderRadius:9999, padding:'2px 7px' }}>
+                <span style={{ fontSize:8, fontWeight:700, color:T.text, background:'rgba(0,0,0,0.7)', borderRadius:9999, padding:'2px 7px' }}>
                   #{displayHistIdx + 1} / {imageHistory.length}
                 </span>
               </div>
@@ -1084,7 +1084,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                     setHistoryIdx(lastIdx);
                     onUpdate();
                   }}
-                  style={{ fontSize:8, fontWeight:700, color:'#000', background:T.accent, border:'none', borderRadius:9999, padding:'3px 8px', cursor:'pointer', whiteSpace:'nowrap' }}>
+                  style={{ fontSize:8, fontWeight:700, color:T.bg, background:T.accent, border:'none', borderRadius:9999, padding:'3px 8px', cursor:'pointer', whiteSpace:'nowrap' }}>
                   ✓ Verwenden
                 </button>
               </div>
@@ -1093,11 +1093,11 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
 
           {/* History navigation arrows — only when history exists */}
           {imageHistory.length > 1 && !generating && (
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', background:'#0a0a0a', borderTop:`1px solid ${T.border}`, padding:'3px 6px', gap:4 }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', background:T.subtle, borderTop:`1px solid ${T.border}`, padding:'3px 6px', gap:4 }}>
               <button
                 onClick={() => setHistoryIdx(Math.max(0, displayHistIdx - 1))}
                 disabled={displayHistIdx === 0}
-                style={{ background:'none', border:'none', color: displayHistIdx === 0 ? '#222' : T.muted, cursor: displayHistIdx === 0 ? 'default' : 'pointer', fontSize:14, padding:'1px 3px', lineHeight:1 }}>
+                style={{ background:'none', border:'none', color: displayHistIdx === 0 ? T.borderLight : T.muted, cursor: displayHistIdx === 0 ? 'default' : 'pointer', fontSize:14, padding:'1px 3px', lineHeight:1 }}>
                 ‹
               </button>
               <span style={{ fontSize:9, color:T.muted, whiteSpace:'nowrap' }}>
@@ -1106,7 +1106,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
               <button
                 onClick={() => setHistoryIdx(Math.min(imageHistory.length - 1, displayHistIdx + 1))}
                 disabled={displayHistIdx === imageHistory.length - 1}
-                style={{ background:'none', border:'none', color: displayHistIdx === imageHistory.length - 1 ? '#222' : T.muted, cursor: displayHistIdx === imageHistory.length - 1 ? 'default' : 'pointer', fontSize:14, padding:'1px 3px', lineHeight:1 }}>
+                style={{ background:'none', border:'none', color: displayHistIdx === imageHistory.length - 1 ? T.borderLight : T.muted, cursor: displayHistIdx === imageHistory.length - 1 ? 'default' : 'pointer', fontSize:14, padding:'1px 3px', lineHeight:1 }}>
                 ›
               </button>
             </div>
@@ -1118,9 +1118,9 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 onClick={() => customUploadRef.current?.click()}
                 disabled={uploadingCustom}
                 title="Eigenes Bild hochladen (JPG/PNG/WebP) — wird direkt für Video verwendet"
-                style={{ background:'none', border:`1px dashed ${T.border}`, borderRadius:5, color: uploadingCustom ? T.accent : '#2a2a2a', fontSize:8, fontWeight:700, padding:'3px 7px', cursor: uploadingCustom ? 'default' : 'pointer', display:'flex', alignItems:'center', gap:3, transition:'all .15s', whiteSpace:'nowrap' }}
+                style={{ background:'none', border:`1px dashed ${T.border}`, borderRadius:5, color: uploadingCustom ? T.accent : T.borderLight, fontSize:8, fontWeight:700, padding:'3px 7px', cursor: uploadingCustom ? 'default' : 'pointer', display:'flex', alignItems:'center', gap:3, transition:'all .15s', whiteSpace:'nowrap' }}
                 onMouseEnter={e => { if (!uploadingCustom) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
-                onMouseLeave={e => { if (!uploadingCustom) { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = '#2a2a2a'; }}}>
+                onMouseLeave={e => { if (!uploadingCustom) { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = T.borderLight; }}}>
                 {uploadingCustom
                   ? <><span style={{ width:7, height:7, border:`1.5px solid ${T.accent}`, borderTopColor:'transparent', borderRadius:'50%', display:'inline-block', animation:'spin .7s linear infinite' }} /> lädt…</>
                   : <>↑ Upload</>
@@ -1151,8 +1151,8 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
       {/* ── Prompt-Vorschau (wenn vorhanden, Editor zu) ── */}
       {scene.imagePrompt && !showPrompt && (
         <div style={{ padding:'6px 18px', borderTop:`1px solid ${T.border}`, background:T.surface }}>
-          <p style={{ margin:0, fontSize:11, color:'#444', lineHeight:1.5, display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
-            <span style={{ color:'#2a2a2a', fontWeight:700 }}>PROMPT: </span>{scene.imagePrompt}
+          <p style={{ margin:0, fontSize:11, color:T.muted, lineHeight:1.5, display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
+            <span style={{ color:T.borderLight, fontWeight:700 }}>PROMPT: </span>{scene.imagePrompt}
           </p>
         </div>
       )}
@@ -1209,25 +1209,25 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
           />
           {/* Close */}
           <button onClick={() => setLightboxOpen(false)}
-            style={{ position:'absolute', top:20, right:24, background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9999, color:'#fff', fontSize:18, width:36, height:36, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
+            style={{ position:'absolute', top:20, right:24, background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9999, color:T.text, fontSize:18, width:36, height:36, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>✕</button>
           {/* Left arrow */}
           <button
             onClick={e => { e.stopPropagation(); setLightboxIdx(i => Math.max(0, i - 1)); }}
             disabled={lightboxIdx === 0}
-            style={{ position:'absolute', left:20, top:'50%', transform:'translateY(-50%)', background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9999, color: lightboxIdx === 0 ? '#444' : '#fff', fontSize:26, width:48, height:48, cursor: lightboxIdx === 0 ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>‹</button>
+            style={{ position:'absolute', left:20, top:'50%', transform:'translateY(-50%)', background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9999, color: lightboxIdx === 0 ? T.muted : T.text, fontSize:26, width:48, height:48, cursor: lightboxIdx === 0 ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>‹</button>
           {/* Right arrow */}
           <button
             onClick={e => { e.stopPropagation(); setLightboxIdx(i => Math.min(imageHistory.length - 1, i + 1)); }}
             disabled={lightboxIdx === imageHistory.length - 1}
-            style={{ position:'absolute', right:20, top:'50%', transform:'translateY(-50%)', background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9999, color: lightboxIdx === imageHistory.length - 1 ? '#444' : '#fff', fontSize:26, width:48, height:48, cursor: lightboxIdx === imageHistory.length - 1 ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>›</button>
+            style={{ position:'absolute', right:20, top:'50%', transform:'translateY(-50%)', background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:9999, color: lightboxIdx === imageHistory.length - 1 ? T.muted : T.text, fontSize:26, width:48, height:48, cursor: lightboxIdx === imageHistory.length - 1 ? 'default' : 'pointer', display:'flex', alignItems:'center', justifyContent:'center', lineHeight:1 }}>›</button>
           {/* Counter + scene info */}
           <div style={{ position:'absolute', bottom:22, left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:4 }}>
             {imageHistory.length > 1 && (
-              <div style={{ background:'rgba(0,0,0,0.65)', borderRadius:9999, padding:'4px 14px', fontSize:12, color:'#ccc' }}>
+              <div style={{ background:'rgba(0,0,0,0.65)', borderRadius:9999, padding:'4px 14px', fontSize:12, color:T.text }}>
                 {lightboxIdx + 1} / {imageHistory.length}
               </div>
             )}
-            <div style={{ background:'rgba(0,0,0,0.5)', borderRadius:9999, padding:'3px 12px', fontSize:11, color:'#888' }}>
+            <div style={{ background:'rgba(0,0,0,0.5)', borderRadius:9999, padding:'3px 12px', fontSize:11, color:T.muted }}>
               Szene #{scene.id + 1} · {fmt(scene.start)} → {fmt(scene.end)}
             </div>
           </div>
@@ -1360,7 +1360,7 @@ function CharPanel({ scene, projectId, onClose, onUpdate, projectCharacters = []
   const availableGlobal = projectCharacters.filter(gc => gc.imageFile && !sceneImageFiles.has(gc.imageFile));
 
   return (
-    <div style={{ padding:'14px 18px', borderTop:`1px solid ${T.border}`, background:'#0a0a0a' }}>
+    <div style={{ padding:'14px 18px', borderTop:`1px solid ${T.border}`, background:T.subtle }}>
 
       {/* ── Projektbibliothek ── */}
       {availableGlobal.length > 0 && (
@@ -1464,7 +1464,7 @@ function CharPanel({ scene, projectId, onClose, onUpdate, projectCharacters = []
       ))}
 
       {err && <div style={{ marginTop:8, fontSize:12, color:T.red }}>⚠ {err}</div>}
-      <p style={{ margin:'8px 0 0', fontSize:11, color:'#333', lineHeight:1.5 }}>
+      <p style={{ margin:'8px 0 0', fontSize:11, color:T.muted, lineHeight:1.5 }}>
         Tipp: Lade ein Referenzbild hoch — Claude analysiert es und beschreibt den Charakter präzise im Imagen-Prompt. Gespeicherte Charaktere erscheinen in der Bibliothek aller anderen Szenen.
       </p>
     </div>
@@ -1487,7 +1487,7 @@ function AdjustImageUpload({ preview, onFile, onClear }) {
         <div style={{ position:'relative', width:72, height:72, borderRadius:8, overflow:'hidden', border:`2px solid ${T.accent}` }}>
           <img src={preview} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
           <button onClick={onClear} title="Bild entfernen"
-            style={{ position:'absolute', top:2, right:2, background:'rgba(0,0,0,.75)', border:'none', borderRadius:'50%', color:'#fff', fontSize:10, width:16, height:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', padding:0 }}>✕</button>
+            style={{ position:'absolute', top:2, right:2, background:'rgba(0,0,0,.75)', border:'none', borderRadius:'50%', color:T.text, fontSize:10, width:16, height:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', padding:0 }}>✕</button>
         </div>
       ) : (
         <div
@@ -1543,7 +1543,7 @@ function CharImageUpload({ preview, imageFile, projectId, onFile }) {
       ) : (
         <span style={{ fontSize: dragging ? 18 : 20, opacity: dragging ? 0.8 : 0.25 }}>{dragging ? '📂' : '👤'}</span>
       )}
-      <div style={{ position:'absolute', bottom:2, right:2, background:'rgba(0,0,0,0.7)', borderRadius:3, fontSize:8, color:'#888', padding:'1px 3px' }}>
+      <div style={{ position:'absolute', bottom:2, right:2, background:'rgba(0,0,0,0.7)', borderRadius:3, fontSize:8, color:T.muted, padding:'1px 3px' }}>
         {dragging ? '↓' : '📷'}
       </div>
     </div>
@@ -1553,7 +1553,7 @@ function CharImageUpload({ preview, imageFile, projectId, onFile }) {
 function Btn({ children, onClick, disabled, loading, primary, active, green, danger, title }) {
   const bg = primary ? T.accent : active ? T.accentBg : green ? T.greenBg : danger ? 'rgba(239,68,68,.08)' : disabled ? T.subtle : T.surface;
   const bd = primary ? T.accent : active ? T.accentBrd : green ? T.greenBrd : danger ? 'rgba(239,68,68,.3)' : T.border;
-  const cl = primary ? '#fff' : active ? T.accent : green ? T.green : danger ? T.red : disabled ? '#333' : T.muted;
+  const cl = primary ? T.text : active ? T.accent : green ? T.green : danger ? T.red : disabled ? T.muted : T.muted;
   return (
     <button onClick={onClick} disabled={disabled||loading} title={title}
       style={{ padding:'6px 13px', borderRadius:9999, fontSize:12, fontWeight:700, background:bg, border:`1px solid ${bd}`, color:cl, cursor:disabled||loading?'not-allowed':'pointer', display:'flex', alignItems:'center', gap:4, transition:'all .15s', whiteSpace:'nowrap' }}>
@@ -1609,19 +1609,19 @@ function Breadcrumb({ active, projectId, router }) {
         const isClickable = !!links[i] && !isActive && wasPastOrVisited;
         return (
           <div key={step} style={{ display:'flex', alignItems:'center', gap:8 }}>
-            {i > 0 && <span style={{ color: wasPastOrVisited || isActive ? T.border : '#1c1c1c' }}>→</span>}
+            {i > 0 && <span style={{ color: wasPastOrVisited || isActive ? T.border : T.border }}>→</span>}
             <span
               onClick={isClickable ? () => router.push(links[i]) : undefined}
               style={{
                 fontSize:12, fontWeight:700, padding:'3px 10px', borderRadius:9999,
                 background: isActive ? T.accentBg : 'transparent',
-                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? '#444444' : '#1e1e1e'}`,
-                color: isActive ? T.accent : wasPastOrVisited ? '#b0b0b0' : '#2e2e2e',
+                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.muted : T.border}`,
+                color: isActive ? T.accent : wasPastOrVisited ? T.text : T.borderLight,
                 cursor: isClickable ? 'pointer' : 'default',
                 transition: 'all .15s',
               }}
               onMouseEnter={e => { if (isClickable) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
-              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = '#444444'; e.currentTarget.style.color = '#b0b0b0'; }}}>
+              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = T.muted; e.currentTarget.style.color = T.text; }}}>
               {step}
             </span>
           </div>
@@ -1632,7 +1632,7 @@ function Breadcrumb({ active, projectId, router }) {
 }
 
 function Screen({ children }) {
-  return <div style={{ minHeight:'100vh', background:'#000', display:'flex', alignItems:'center', justifyContent:'center' }}>{children}</div>;
+  return <div style={{ minHeight:'100vh', background:T.bg, display:'flex', alignItems:'center', justifyContent:'center' }}>{children}</div>;
 }
 
 /* ── InsertBar: "+" Button zwischen Szenen ──────────────────── */
@@ -1802,9 +1802,9 @@ function NormalSceneRefUpload({ scene, projectId, onUpdate }) {
               await fetch(`/api/projects/${projectId}/scenes/${scene.id}/remove-ref-image`, { method:'POST' });
               onUpdate();
             }}
-            style={{ background:'none', border:'none', color:'#333', cursor:'pointer', fontSize:11, padding:'2px' }}
+            style={{ background:'none', border:'none', color:T.muted, cursor:'pointer', fontSize:11, padding:'2px' }}
             onMouseEnter={e => e.currentTarget.style.color = T.red}
-            onMouseLeave={e => e.currentTarget.style.color = '#333'}
+            onMouseLeave={e => e.currentTarget.style.color = T.muted}
             title="Referenzbild entfernen">✕</button>
           <input ref={inputRef} type="file" accept="image/*" hidden onChange={e => { const f = e.target.files?.[0]; if (f) upload(f); }} />
         </div>
@@ -1815,7 +1815,7 @@ function NormalSceneRefUpload({ scene, projectId, onUpdate }) {
           onDragOver={e => { e.preventDefault(); setDragging(true); }}
           onDragLeave={() => setDragging(false)}
           onDrop={e => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) upload(f); }}
-          style={{ display:'flex', alignItems:'center', gap:5, cursor:'pointer', padding:'4px 6px', borderRadius:7, border:`1px dashed ${dragging ? T.accent : '#1e1e1e'}`, background: dragging ? T.accentBg : 'transparent', transition:'all .15s' }}>
+          style={{ display:'flex', alignItems:'center', gap:5, cursor:'pointer', padding:'4px 6px', borderRadius:7, border:`1px dashed ${dragging ? T.accent : T.border}`, background: dragging ? T.accentBg : 'transparent', transition:'all .15s' }}>
           {uploading
             ? <div style={{ width:10, height:10, border:`2px solid ${T.accent}`, borderTopColor:'transparent', borderRadius:'50%', animation:'spin .7s linear infinite' }} />
             : <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={T.muted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -1868,8 +1868,8 @@ function ManualRefImageUpload({ scene, projectId, onUpdate, compact = false, thu
           title={refUrl ? 'Eigenes Referenzbild ersetzen' : 'Eigenes Referenzbild hochladen'}
           style={{
             width:44, aspectRatio:thumbAspect ?? '9/16', borderRadius:8, overflow:'hidden',
-            border:`2px dashed ${refUrl ? T.accent : dragging ? T.accent : '#2a2a2a'}`,
-            background: dragging ? T.accentBg : refUrl ? 'transparent' : '#0a0a0a',
+            border:`2px dashed ${refUrl ? T.accent : dragging ? T.accent : T.borderLight}`,
+            background: dragging ? T.accentBg : refUrl ? 'transparent' : T.subtle,
             cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
             transition:'all .15s', position:'relative',
           }}>
@@ -1884,7 +1884,7 @@ function ManualRefImageUpload({ scene, projectId, onUpdate, compact = false, thu
           ) : (
             <>
               <span style={{ fontSize:12, opacity: dragging ? 0.9 : 0.3 }}>{dragging ? '📂' : '📷'}</span>
-              <span style={{ fontSize:7, color:'#333', marginTop:2, textAlign:'center', lineHeight:1.2 }}>eigenes<br />Bild</span>
+              <span style={{ fontSize:7, color:T.muted, marginTop:2, textAlign:'center', lineHeight:1.2 }}>eigenes<br />Bild</span>
             </>
           )}
         </div>

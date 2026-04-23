@@ -72,19 +72,19 @@ function Breadcrumb({ projectId, router }) {
         const isClickable = !!links[i] && !isActive && wasPastOrVisited;
         return (
           <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {i > 0 && <span style={{ color: wasPastOrVisited || isActive ? T.border : '#1c1c1c' }}>→</span>}
+            {i > 0 && <span style={{ color: wasPastOrVisited || isActive ? T.border : T.border }}>→</span>}
             <span
               onClick={isClickable ? () => router.push(links[i]) : undefined}
               style={{
                 fontSize: 12, fontWeight: 700, padding: '3px 10px', borderRadius: 9999,
                 background: isActive ? T.accentBg : 'transparent',
-                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? '#444444' : '#1e1e1e'}`,
-                color: isActive ? T.accent : wasPastOrVisited ? '#b0b0b0' : '#2e2e2e',
+                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.muted : T.border}`,
+                color: isActive ? T.accent : wasPastOrVisited ? T.text : T.borderLight,
                 cursor: isClickable ? 'pointer' : 'default',
                 transition: 'all .15s',
               }}
               onMouseEnter={e => { if (isClickable) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; } }}
-              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = '#444444'; e.currentTarget.style.color = '#b0b0b0'; } }}>
+              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = T.muted; e.currentTarget.style.color = T.text; } }}>
               {step}
             </span>
           </div>
@@ -146,7 +146,7 @@ function hexWithOpacity(hex, opacity) {
 
 function buildTextShadow(subtitleStyle) {
   if (!subtitleStyle.shadowEnabled) return undefined;
-  return `2px 2px 4px ${subtitleStyle.shadowColor || '#000000'}`;
+  return `2px 2px 4px ${subtitleStyle.shadowColor || T.bg}`;
 }
 
 // ── Toggle ───────────────────────────────────────────────────────────────────
@@ -165,7 +165,7 @@ function Toggle({ value, onChange }) {
         position: 'absolute', top: 3,
         left: value ? 17 : 3,
         width: 12, height: 12, borderRadius: '50%',
-        background: value ? '#fff' : T.muted,
+        background: value ? T.text : T.muted,
         transition: 'left .2s',
       }} />
     </div>
@@ -192,18 +192,18 @@ function SubtitlePreview({ subtitleStyle, sampleText, format }) {
     fontFamily: subtitleStyle.fontFamily || 'Arial',
     fontSize: Math.round((subtitleStyle.fontSize || 60) * (w / (isPortrait ? 1080 : 1920))),
     fontWeight: subtitleStyle.fontWeight === 'bold' ? 700 : 400,
-    color: subtitleStyle.fontColor || '#ffffff',
+    color: subtitleStyle.fontColor || T.text,
     textAlign: col === 0 ? 'left' : col === 2 ? 'right' : 'center',
     lineHeight: 1.3,
     maxWidth: '85%',
     padding: subtitleStyle.bgBoxEnabled ? '3px 6px' : '0',
     background: subtitleStyle.bgBoxEnabled
-      ? hexWithOpacity(subtitleStyle.bgBoxColor || '#000000', subtitleStyle.bgBoxOpacity ?? 0.6)
+      ? hexWithOpacity(subtitleStyle.bgBoxColor || T.bg, subtitleStyle.bgBoxOpacity ?? 0.6)
       : 'transparent',
     borderRadius: subtitleStyle.bgBoxEnabled ? 3 : 0,
     textShadow: buildTextShadow(subtitleStyle),
     WebkitTextStroke: subtitleStyle.outlineEnabled && subtitleStyle.outlineWidth
-      ? `${subtitleStyle.outlineWidth * (w / (isPortrait ? 1080 : 1920))}px ${subtitleStyle.outlineColor || '#000000'}`
+      ? `${subtitleStyle.outlineWidth * (w / (isPortrait ? 1080 : 1920))}px ${subtitleStyle.outlineColor || T.bg}`
       : undefined,
   };
 
@@ -218,7 +218,7 @@ function SubtitlePreview({ subtitleStyle, sampleText, format }) {
       flexShrink: 0,
     }}>
       {isPortrait && (
-        <div style={{ position: 'absolute', top: 4, left: '50%', transform: 'translateX(-50%)', width: 24, height: 4, background: '#333', borderRadius: 2 }} />
+        <div style={{ position: 'absolute', top: 4, left: '50%', transform: 'translateX(-50%)', width: 24, height: 4, background: T.muted, borderRadius: 2 }} />
       )}
       <div style={{
         position: 'absolute', inset: 0,
@@ -274,8 +274,8 @@ function StylePanel({ style: s, onChange }) {
 
       <div style={rowStyle}>
         <span style={labelStyle}>Farbe</span>
-        <input type="color" value={s.fontColor || '#ffffff'} onChange={e => set('fontColor', e.target.value)} style={colorPickerStyle} />
-        <input type="text" value={s.fontColor || '#ffffff'} onChange={e => set('fontColor', e.target.value)} style={{ ...inputBase, width: 72 }} />
+        <input type="color" value={s.fontColor || T.text} onChange={e => set('fontColor', e.target.value)} style={colorPickerStyle} />
+        <input type="text" value={s.fontColor || T.text} onChange={e => set('fontColor', e.target.value)} style={{ ...inputBase, width: 72 }} />
       </div>
 
       <div style={rowStyle}>
@@ -283,7 +283,7 @@ function StylePanel({ style: s, onChange }) {
         <Toggle value={!!s.outlineEnabled} onChange={v => set('outlineEnabled', v)} />
         {s.outlineEnabled && (
           <>
-            <input type="color" value={s.outlineColor || '#000000'} onChange={e => set('outlineColor', e.target.value)} style={colorPickerStyle} />
+            <input type="color" value={s.outlineColor || T.bg} onChange={e => set('outlineColor', e.target.value)} style={colorPickerStyle} />
             <input type="range" min={1} max={5} value={s.outlineWidth || 2} onChange={e => set('outlineWidth', parseInt(e.target.value))} style={{ flex: 1, accentColor: T.accent }} />
             <span style={{ fontSize: 10, color: T.muted, flexShrink: 0, minWidth: 20 }}>{s.outlineWidth || 2}px</span>
           </>
@@ -294,7 +294,7 @@ function StylePanel({ style: s, onChange }) {
         <span style={labelStyle}>Schatten</span>
         <Toggle value={!!s.shadowEnabled} onChange={v => set('shadowEnabled', v)} />
         {s.shadowEnabled && (
-          <input type="color" value={s.shadowColor || '#000000'} onChange={e => set('shadowColor', e.target.value)} style={colorPickerStyle} />
+          <input type="color" value={s.shadowColor || T.bg} onChange={e => set('shadowColor', e.target.value)} style={colorPickerStyle} />
         )}
       </div>
 
@@ -303,7 +303,7 @@ function StylePanel({ style: s, onChange }) {
         <Toggle value={!!s.bgBoxEnabled} onChange={v => set('bgBoxEnabled', v)} />
         {s.bgBoxEnabled && (
           <>
-            <input type="color" value={s.bgBoxColor || '#000000'} onChange={e => set('bgBoxColor', e.target.value)} style={colorPickerStyle} />
+            <input type="color" value={s.bgBoxColor || T.bg} onChange={e => set('bgBoxColor', e.target.value)} style={colorPickerStyle} />
             <input type="range" min={0} max={1} step={0.05} value={s.bgBoxOpacity ?? 0.6} onChange={e => set('bgBoxOpacity', parseFloat(e.target.value))} style={{ flex: 1, accentColor: T.accent }} />
             <span style={{ fontSize: 10, color: T.muted, flexShrink: 0, minWidth: 28 }}>{Math.round((s.bgBoxOpacity ?? 0.6) * 100)}%</span>
           </>
@@ -454,7 +454,7 @@ function SceneCard({ clip, index, total, onUpdate, onMove, projectId, format,
             style={{
               position: 'absolute', bottom: 14, left: '50%', transform: 'translateX(-50%)',
               background: isPreviewPlaying ? 'rgba(239,68,68,0.9)' : 'rgba(181,152,226,0.9)',
-              border: 'none', borderRadius: 9999, color: '#fff',
+              border: 'none', borderRadius: 9999, color: T.text,
               fontSize: 10, fontWeight: 700, padding: '4px 10px', cursor: 'pointer',
               whiteSpace: 'nowrap', backdropFilter: 'blur(4px)',
               zIndex: 2,
@@ -464,7 +464,7 @@ function SceneCard({ clip, index, total, onUpdate, onMove, projectId, format,
         )}
         {/* Trim / progress bar */}
         <div style={{
-          height: 8, flexShrink: 0, background: '#1a1a1a',
+          height: 8, flexShrink: 0, background: T.border,
           position: 'relative', overflow: 'hidden',
         }}>
           {/* Active (trimmed-in) region */}
@@ -481,7 +481,7 @@ function SceneCard({ clip, index, total, onUpdate, onMove, projectId, format,
               position: 'absolute', top: 0, bottom: 0,
               left: `${barHead * 100}%`,
               width: 2,
-              background: isPreviewPlaying ? '#fff' : 'rgba(255,255,255,0.3)',
+              background: isPreviewPlaying ? T.text : 'rgba(255,255,255,0.3)',
               borderRadius: 1,
               transition: isPreviewPlaying ? 'none' : 'background .3s',
             }} />
@@ -584,15 +584,15 @@ export default function ExportPage() {
     position: 'bottom-center',
     fontFamily: 'Arial',
     fontSize: 60,
-    fontColor: '#ffffff',
+    fontColor: T.text,
     fontWeight: 'bold',
     outlineEnabled: true,
-    outlineColor: '#000000',
+    outlineColor: T.bg,
     outlineWidth: 2,
     shadowEnabled: false,
-    shadowColor: '#000000',
+    shadowColor: T.bg,
     bgBoxEnabled: false,
-    bgBoxColor: '#000000',
+    bgBoxColor: T.bg,
     bgBoxOpacity: 0.6,
   });
   const [subtitlesEnabled, setSubtitlesEnabled] = useState(true);
@@ -879,7 +879,7 @@ export default function ExportPage() {
                 <p style={{ color: T.muted, fontSize: 14, margin: '0 0 4px' }}>
                   Dein Video wurde erfolgreich exportiert.
                 </p>
-                <p style={{ color: '#555', fontSize: 12, margin: 0 }}>{exportFile}</p>
+                <p style={{ color: T.muted, fontSize: 12, margin: 0 }}>{exportFile}</p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
                 <a
@@ -888,7 +888,7 @@ export default function ExportPage() {
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 10,
                     background: `linear-gradient(135deg, ${T.green}, #16a34a)`,
-                    color: '#000', fontWeight: 800, fontSize: 16,
+                    color: T.bg, fontWeight: 800, fontSize: 16,
                     padding: '14px 32px', borderRadius: 9999,
                     textDecoration: 'none', whiteSpace: 'nowrap',
                     boxShadow: '0 0 24px rgba(34,197,94,0.3)',
@@ -943,7 +943,7 @@ export default function ExportPage() {
                   download={exportFile}
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 4,
-                    background: T.green, color: '#000',
+                    background: T.green, color: T.bg,
                     fontWeight: 700, fontSize: 12, padding: '4px 14px',
                     borderRadius: 9999, textDecoration: 'none',
                   }}>
@@ -971,7 +971,7 @@ export default function ExportPage() {
                   background: canExport ? `linear-gradient(135deg, ${T.accent}, #8b68d4)` : T.subtle,
                   border: `1px solid ${canExport ? T.accentBrd : T.border}`,
                   borderRadius: 9999,
-                  color: canExport ? '#fff' : T.muted,
+                  color: canExport ? T.text : T.muted,
                   fontWeight: 700, fontSize: 13, padding: '8px 22px',
                   cursor: canExport ? 'pointer' : 'not-allowed',
                   display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -1104,7 +1104,7 @@ export default function ExportPage() {
                 background: canExport ? `linear-gradient(135deg, ${T.accent}, #8b68d4)` : T.subtle,
                 border: `1px solid ${canExport ? T.accent : T.border}`,
                 borderRadius: 9999,
-                color: canExport ? '#fff' : T.muted,
+                color: canExport ? T.text : T.muted,
                 fontWeight: 700, fontSize: 13, padding: '10px 28px',
                 cursor: canExport ? 'pointer' : 'not-allowed',
                 display: 'inline-flex', alignItems: 'center', gap: 8,

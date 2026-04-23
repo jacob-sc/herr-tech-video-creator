@@ -81,8 +81,19 @@ export default function ProjectsPage() {
     setLoading(true);
     fetch('/api/projects/list')
       .then(r => r.json())
-      .then(d => { setProjects(d.projects ?? []); setLoading(false); })
+      .then(d => {
+        const list = d.projects ?? [];
+        setProjects(list);
+        setLoading(false);
+        // Wenn noch gar keine Projekte da sind (z.B. erster Besuch von Herr Tech World),
+        // direkt in den Neu-Projekt-Flow. Sobald ein Projekt existiert, bleibt die
+        // Uebersicht der Standard-Landepunkt.
+        if (list.length === 0) {
+          router.replace('/');
+        }
+      })
       .catch(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -148,7 +159,7 @@ export default function ProjectsPage() {
           rightSlot={
             <button
               onClick={() => router.push('/')}
-              style={{ background:`linear-gradient(135deg, ${T.accent}, ${T.accentHover})`, border:'none', borderRadius:9999, color:'#fff', fontWeight:700, fontSize:12, padding:'6px 14px', cursor:'pointer', whiteSpace:'nowrap' }}>
+              style={{ background:`linear-gradient(135deg, ${T.accent}, ${T.accentHover})`, border:'none', borderRadius:9999, color:T.text, fontWeight:700, fontSize:12, padding:'6px 14px', cursor:'pointer', whiteSpace:'nowrap' }}>
               + Neues Projekt
             </button>
           }
@@ -190,7 +201,7 @@ export default function ProjectsPage() {
               <div style={{ fontSize:48, marginBottom:16 }}>🎬</div>
               <p style={{ color:T.muted, fontSize:16, marginBottom:24 }}>Noch keine Projekte vorhanden.</p>
               <button onClick={() => router.push('/')}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:'#000', fontWeight:700, fontSize:14, padding:'12px 28px', cursor:'pointer' }}>
+                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.bg, fontWeight:700, fontSize:14, padding:'12px 28px', cursor:'pointer' }}>
                 + Erstes Projekt erstellen
               </button>
             </div>
@@ -240,7 +251,7 @@ export default function ProjectsPage() {
                               onKeyDown={e => { if (e.key === 'Enter') submitRename(p.id); if (e.key === 'Escape') setRenamingId(null); }}
                               onBlur={() => submitRename(p.id)}
                               onClick={e => e.stopPropagation()}
-                              style={{ flex:1, minWidth:0, background:'#1a1a1a', border:`1px solid ${T.accentBrd}`, borderRadius:6, color:T.text, fontSize:14, fontWeight:700, padding:'2px 8px', outline:'none' }}
+                              style={{ flex:1, minWidth:0, background:T.border, border:`1px solid ${T.accentBrd}`, borderRadius:6, color:T.text, fontSize:14, fontWeight:700, padding:'2px 8px', outline:'none' }}
                             />
                           ) : (
                             <>
@@ -248,16 +259,16 @@ export default function ProjectsPage() {
                               <button
                                 onClick={e => { e.stopPropagation(); startRename(p); }}
                                 title="Umbenennen"
-                                style={{ flexShrink:0, background:'none', border:'none', cursor:'pointer', color:'#444', padding:'2px 4px', lineHeight:1, borderRadius:4, transition:'color .15s' }}
+                                style={{ flexShrink:0, background:'none', border:'none', cursor:'pointer', color:T.muted, padding:'2px 4px', lineHeight:1, borderRadius:4, transition:'color .15s' }}
                                 onMouseEnter={e => e.currentTarget.style.color = T.accent}
-                                onMouseLeave={e => e.currentTarget.style.color = '#444'}>
+                                onMouseLeave={e => e.currentTarget.style.color = T.muted}>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                 </svg>
                               </button>
                               {isAdmin && p.ownerEmail && (
-                                <span style={{ flexShrink:0, fontSize:10, color:'#888', background:'#1a1a1a', border:'1px solid #2a2a2a', borderRadius:4, padding:'1px 6px', fontWeight:500, letterSpacing:'0.02em' }}>
+                                <span style={{ flexShrink:0, fontSize:10, color:T.muted, background:T.border, border:'1px solid #2a2a2a', borderRadius:4, padding:'1px 6px', fontWeight:500, letterSpacing:'0.02em' }}>
                                   {p.ownerName ? `${p.ownerName}` : p.ownerEmail.split('@')[0]}
                                 </span>
                               )}
@@ -268,13 +279,13 @@ export default function ProjectsPage() {
                           <span style={{ fontSize:12, color:status.color, fontWeight:600 }}>{status.label}</span>
                           {scenes.length > 0 && p.setup && (
                             <>
-                              <span style={{ fontSize:11, color:'#333' }}>·</span>
+                              <span style={{ fontSize:11, color:T.muted }}>·</span>
                               <span style={{ fontSize:11, color:T.muted }}>
                                 {p.setup?.format ?? '?'} · {scenes.length} Szenen
                               </span>
                             </>
                           )}
-                          <span style={{ fontSize:11, color:'#333' }}>·</span>
+                          <span style={{ fontSize:11, color:T.muted }}>·</span>
                           <span style={{ fontSize:11, color:T.muted }}>{fmt(p.createdAt)}</span>
                         </div>
                       </div>
@@ -381,9 +392,9 @@ export default function ProjectsPage() {
                   <button
                     onClick={() => setPage(p => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    style={{ background:'none', border:`1px solid ${page === 1 ? T.subtle : T.border}`, borderRadius:9999, color: page === 1 ? '#333' : T.muted, fontSize:13, padding:'7px 16px', cursor: page === 1 ? 'default' : 'pointer', transition:'all .15s' }}
+                    style={{ background:'none', border:`1px solid ${page === 1 ? T.subtle : T.border}`, borderRadius:9999, color: page === 1 ? T.muted : T.muted, fontSize:13, padding:'7px 16px', cursor: page === 1 ? 'default' : 'pointer', transition:'all .15s' }}
                     onMouseEnter={e => { if (page > 1) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = page === 1 ? T.subtle : T.border; e.currentTarget.style.color = page === 1 ? '#333' : T.muted; }}>
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = page === 1 ? T.subtle : T.border; e.currentTarget.style.color = page === 1 ? T.muted : T.muted; }}>
                     ← Zurück
                   </button>
 
@@ -406,9 +417,9 @@ export default function ProjectsPage() {
                   <button
                     onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    style={{ background:'none', border:`1px solid ${page === totalPages ? T.subtle : T.border}`, borderRadius:9999, color: page === totalPages ? '#333' : T.muted, fontSize:13, padding:'7px 16px', cursor: page === totalPages ? 'default' : 'pointer', transition:'all .15s' }}
+                    style={{ background:'none', border:`1px solid ${page === totalPages ? T.subtle : T.border}`, borderRadius:9999, color: page === totalPages ? T.muted : T.muted, fontSize:13, padding:'7px 16px', cursor: page === totalPages ? 'default' : 'pointer', transition:'all .15s' }}
                     onMouseEnter={e => { if (page < totalPages) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = page === totalPages ? T.subtle : T.border; e.currentTarget.style.color = page === totalPages ? '#333' : T.muted; }}>
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = page === totalPages ? T.subtle : T.border; e.currentTarget.style.color = page === totalPages ? T.muted : T.muted; }}>
                     Weiter →
                   </button>
                 </div>

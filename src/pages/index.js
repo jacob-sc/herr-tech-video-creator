@@ -377,16 +377,16 @@ export default function HomePage() {
                 </p>
                 <div style={{ background: 'rgba(181,152,226,0.08)', border: `1px solid rgba(181,152,226,0.2)`, borderRadius: 10, padding: '10px 14px' }}>
                   <p style={{ color: T.accent, fontSize: 13, fontWeight: 600, margin: '0 0 6px' }}>✅ So geht's trotzdem:</p>
-                  <ol style={{ color: '#ccc', fontSize: 13, margin: 0, paddingLeft: 18, lineHeight: 1.7 }}>
+                  <ol style={{ color: T.text, fontSize: 13, margin: 0, paddingLeft: 18, lineHeight: 1.7 }}>
                     <li>Video im Browser auf {platformBlock} öffnen</li>
-                    <li>Mit <strong style={{ color: '#fff' }}>
+                    <li>Mit <strong style={{ color: T.text }}>
                       {platformBlock === 'YouTube' ? (
                         <a href="https://app.ytdown.to/de23/" target="_blank" rel="noopener noreferrer" style={{ color: T.accent, textDecoration: 'underline' }}>ytdown.to</a>
                       ) : (
                         <a href="https://cobalt.tools" target="_blank" rel="noopener noreferrer" style={{ color: T.accent, textDecoration: 'underline' }}>cobalt.tools</a>
                       )}
                     </strong> herunterladen</li>
-                    <li>Hier oben auf <strong style={{ color: '#fff' }}>"Datei hochladen"</strong> wechseln und hochladen</li>
+                    <li>Hier oben auf <strong style={{ color: T.text }}>"Datei hochladen"</strong> wechseln und hochladen</li>
                   </ol>
                 </div>
               </div>
@@ -412,7 +412,7 @@ export default function HomePage() {
                         background: isDone ? T.accent : isActive ? 'transparent' : T.subtle,
                         border: isActive ? `2px solid ${T.accent}` : 'none',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: isDone ? '#fff' : isActive ? T.accent : T.muted,
+                        color: isDone ? T.text : isActive ? T.accent : T.muted,
                       }}>
                         {isDone ? '✓' : isActive ? <Spinner /> : <span style={{ fontSize: 10 }}>{i + 1}</span>}
                       </div>
@@ -460,7 +460,7 @@ export default function HomePage() {
                         background: isDone ? T.accent : isActive ? 'transparent' : T.subtle,
                         border: isActive ? `2px solid ${T.accent}` : 'none',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: isDone ? '#fff' : isActive ? T.accent : T.muted,
+                        color: isDone ? T.text : isActive ? T.accent : T.muted,
                       }}>
                         {isDone ? '✓' : isActive ? <Spinner /> : <span style={{ fontSize: 10 }}>{i + 1}</span>}
                       </div>
@@ -491,7 +491,7 @@ export default function HomePage() {
                 style={{
                   marginTop: 16, width: '100%', padding: '17px', borderRadius: 9999,
                   background: creatingManual || !manualPrompt.trim() ? T.subtle : T.btn,
-                  color: creatingManual || !manualPrompt.trim() ? T.muted : '#fff',
+                  color: creatingManual || !manualPrompt.trim() ? T.muted : T.text,
                   border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
                   cursor: creatingManual || !manualPrompt.trim() ? 'not-allowed' : 'pointer',
                   transition: 'all .2s',
@@ -506,7 +506,7 @@ export default function HomePage() {
                 style={{
                   marginTop: 16, width: '100%', padding: '17px', borderRadius: 9999,
                   background: isProcessing || (!file && !url.trim()) ? T.subtle : T.btn,
-                  color: isProcessing || (!file && !url.trim()) ? T.muted : '#fff',
+                  color: isProcessing || (!file && !url.trim()) ? T.muted : T.text,
                   border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
                   cursor: isProcessing || (!file && !url.trim()) ? 'not-allowed' : 'pointer',
                   transition: 'all .2s',

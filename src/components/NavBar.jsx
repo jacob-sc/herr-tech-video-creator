@@ -37,7 +37,7 @@ export default function NavBar({ rightSlot, showProjectsButton = true, currentPa
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
         <a
           href={backHref}
-          title="Zurück zur Plattform"
+          title="Zurück zu Herr Tech World"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '6px 12px', borderRadius: 9999,
@@ -47,7 +47,7 @@ export default function NavBar({ rightSlot, showProjectsButton = true, currentPa
           }}
           onMouseEnter={(e) => { e.currentTarget.style.color = T.text; e.currentTarget.style.borderColor = T.borderLight; }}
           onMouseLeave={(e) => { e.currentTarget.style.color = T.muted; e.currentTarget.style.borderColor = T.border; }}>
-          <span style={{ fontSize: 14, lineHeight: 1 }}>←</span> Plattform
+          <span style={{ fontSize: 14, lineHeight: 1 }}>←</span> World
         </a>
         <img
           src="/herr-tech-logo.png"

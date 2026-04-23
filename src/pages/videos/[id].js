@@ -54,19 +54,19 @@ function Breadcrumb({ projectId, router }) {
         const isClickable = !!links[i] && !isActive && wasPastOrVisited;
         return (
           <div key={step} style={{ display:'flex', alignItems:'center', gap:8 }}>
-            {i > 0 && <span style={{ color: wasPastOrVisited || isActive ? T.border : '#1c1c1c' }}>→</span>}
+            {i > 0 && <span style={{ color: wasPastOrVisited || isActive ? T.border : T.border }}>→</span>}
             <span
               onClick={isClickable ? () => router.push(links[i]) : undefined}
               style={{
                 fontSize:12, fontWeight:700, padding:'3px 10px', borderRadius:9999,
                 background: isActive ? T.accentBg : 'transparent',
-                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? '#444444' : '#1e1e1e'}`,
-                color: isActive ? T.accent : wasPastOrVisited ? '#b0b0b0' : '#2e2e2e',
+                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.muted : T.border}`,
+                color: isActive ? T.accent : wasPastOrVisited ? T.text : T.borderLight,
                 cursor: isClickable ? 'pointer' : 'default',
                 transition: 'all .15s',
               }}
               onMouseEnter={e => { if (isClickable) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
-              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = '#444444'; e.currentTarget.style.color = '#b0b0b0'; }}}>
+              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = T.muted; e.currentTarget.style.color = T.text; }}}>
               {step}
             </span>
           </div>
@@ -89,7 +89,7 @@ function StatusBadge({ status }) {
   return <span style={{ fontSize:11, fontWeight:700, padding:'3px 9px', borderRadius:9999, background:T.subtle, color:T.muted, border:`1px solid ${T.border}` }}>Ausstehend</span>;
 }
 
-function Spinner({ size = 12, color = '#fff' }) {
+function Spinner({ size = 12, color = T.text }) {
   return <span style={{ width:size, height:size, borderRadius:'50%', border:`2px solid rgba(255,255,255,.25)`, borderTopColor:color, display:'inline-block', animation:'spin .7s linear infinite', flexShrink:0 }} />;
 }
 
@@ -392,7 +392,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
               style={{
                 background: (!canGenerate || generating || generatingPrompt) ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
                 border: `1px solid ${canGenerate ? T.accent : T.border}`,
-                borderRadius:9999, color: canGenerate ? '#fff' : T.muted,
+                borderRadius:9999, color: canGenerate ? T.text : T.muted,
                 fontWeight:700, fontSize:12, padding:'7px 18px',
                 cursor: canGenerate && !generating && !generatingPrompt ? 'pointer' : 'not-allowed',
                 display:'inline-flex', alignItems:'center', gap:6, transition:'all .15s', flexShrink:0,
@@ -430,14 +430,14 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
                       setHistoryIdx(null);
                       onUpdate?.();
                     }}
-                    style={{ fontSize:10, fontWeight:700, color:'#000', background:T.accent, border:'none', borderRadius:9999, padding:'3px 10px', cursor:'pointer', whiteSpace:'nowrap', boxShadow:'0 2px 8px rgba(0,0,0,0.5)' }}>
+                    style={{ fontSize:10, fontWeight:700, color:T.bg, background:T.accent, border:'none', borderRadius:9999, padding:'3px 10px', cursor:'pointer', whiteSpace:'nowrap', boxShadow:'0 2px 8px rgba(0,0,0,0.5)' }}>
                     ✓ Verwenden
                   </button>
                 </div>
               )}
               {/* History counter overlay */}
               {videoHistory.length > 1 && (
-                <div style={{ position:'absolute', bottom:6, right:8, background:'rgba(0,0,0,0.65)', borderRadius:9999, padding:'2px 8px', fontSize:9, color:'#ccc', zIndex:10 }}>
+                <div style={{ position:'absolute', bottom:6, right:8, background:'rgba(0,0,0,0.65)', borderRadius:9999, padding:'2px 8px', fontSize:9, color:T.text, zIndex:10 }}>
                   {displayHistIdx + 1} / {videoHistory.length}
                 </div>
               )}
@@ -467,7 +467,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
                     <li>Gewalt, Bedrohungen oder Angst-Szenarien</li>
                   </ul>
                   <div style={{ color:'rgba(239,68,68,.6)', fontSize:11, marginBottom:12, lineHeight:1.5 }}>
-                    👉 Nochmal versuchen (klappt manchmal beim 2. Versuch) oder auf <strong style={{color:'#fff'}}>Kling</strong> wechseln — Kling ist deutlich weniger restriktiv.
+                    👉 Nochmal versuchen (klappt manchmal beim 2. Versuch) oder auf <strong style={{color:T.text}}>Kling</strong> wechseln — Kling ist deutlich weniger restriktiv.
                   </div>
                   <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
                     <button
@@ -525,11 +525,11 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
 
         {/* History navigation arrows */}
         {videoHistory.length > 1 && status !== 'generating' && (
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', background:'#0a0a0a', borderTop:`1px solid ${T.border}`, padding:'3px 6px', gap:4, flexShrink:0 }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', background:T.subtle, borderTop:`1px solid ${T.border}`, padding:'3px 6px', gap:4, flexShrink:0 }}>
             <button
               onClick={() => setHistoryIdx(Math.max(0, displayHistIdx - 1))}
               disabled={displayHistIdx === 0}
-              style={{ background:'none', border:'none', color: displayHistIdx === 0 ? '#222' : T.muted, cursor: displayHistIdx === 0 ? 'default' : 'pointer', fontSize:16, padding:'1px 4px', lineHeight:1 }}>
+              style={{ background:'none', border:'none', color: displayHistIdx === 0 ? T.borderLight : T.muted, cursor: displayHistIdx === 0 ? 'default' : 'pointer', fontSize:16, padding:'1px 4px', lineHeight:1 }}>
               ‹
             </button>
             <span style={{ fontSize:9, color:T.muted, whiteSpace:'nowrap' }}>
@@ -538,7 +538,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
             <button
               onClick={() => setHistoryIdx(Math.min(videoHistory.length - 1, displayHistIdx + 1))}
               disabled={displayHistIdx === videoHistory.length - 1}
-              style={{ background:'none', border:'none', color: displayHistIdx === videoHistory.length - 1 ? '#222' : T.muted, cursor: displayHistIdx === videoHistory.length - 1 ? 'default' : 'pointer', fontSize:16, padding:'1px 4px', lineHeight:1 }}>
+              style={{ background:'none', border:'none', color: displayHistIdx === videoHistory.length - 1 ? T.borderLight : T.muted, cursor: displayHistIdx === videoHistory.length - 1 ? 'default' : 'pointer', fontSize:16, padding:'1px 4px', lineHeight:1 }}>
               ›
             </button>
           </div>
@@ -849,12 +849,12 @@ export default function VideosPage() {
                   style={{
                     background: (generatingAll || generatingCount > 0) ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
                     border: `1px solid ${T.accent}`, borderRadius:9999,
-                    color:'#fff', fontWeight:700, fontSize:13, padding:'8px 20px',
+                    color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px',
                     cursor:(generatingAll || generatingCount > 0) ? 'not-allowed' : 'pointer',
                     display:'inline-flex', alignItems:'center', gap:8, transition:'all .15s',
                   }}>
                   {(generatingAll || generatingCount > 0)
-                    ? <><span style={{ width:12, height:12, borderRadius:'50%', border:`2px solid rgba(255,255,255,.3)`, borderTopColor:'#fff', display:'inline-block', animation:'spin .7s linear infinite' }} /> Wird gestartet…</>
+                    ? <><span style={{ width:12, height:12, borderRadius:'50%', border:`2px solid rgba(255,255,255,.3)`, borderTopColor:T.text, display:'inline-block', animation:'spin .7s linear infinite' }} /> Wird gestartet…</>
                     : <>⚡ Alle Videos erstellen <span style={{ fontWeight:400, fontSize:11, opacity:.75 }}>({pendingCount} ausstehend)</span></>}
                 </button>
               )}
@@ -864,7 +864,7 @@ export default function VideosPage() {
                 {doneCount > 0 && (
                   <button
                     onClick={() => router.push(`/export/${id}`)}
-                    style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:'#fff', fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                    style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                     Weiter → Export
                   </button>
                 )}
@@ -881,7 +881,7 @@ export default function VideosPage() {
             <div style={{ textAlign:'center', padding:'60px 20px', color:T.muted }}>
               <div style={{ fontSize:48, marginBottom:12, opacity:.2 }}>🖼</div>
               <div style={{ fontSize:16, marginBottom:8, color:T.subtle }}>Noch keine Bilder vorhanden</div>
-              <button onClick={() => router.push(`/scenes/${id}`)} style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:'#fff', fontWeight:700, fontSize:13, padding:'9px 22px', cursor:'pointer', marginTop:8 }}>
+              <button onClick={() => router.push(`/scenes/${id}`)} style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'9px 22px', cursor:'pointer', marginTop:8 }}>
                 ← Zu den Bildern
               </button>
             </div>
@@ -918,7 +918,7 @@ export default function VideosPage() {
             {doneCount > 0 && (
               <button
                 onClick={() => router.push(`/export/${id}`)}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:'#fff', fontWeight:700, fontSize:13, padding:'10px 28px', cursor:'pointer', boxShadow:`0 0 20px rgba(181,152,226,0.3)` }}>
+                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'10px 28px', cursor:'pointer', boxShadow:`0 0 20px rgba(181,152,226,0.3)` }}>
                 Weiter → Export 🎬
               </button>
             )}
