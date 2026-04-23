@@ -12,6 +12,8 @@
   --accent-hover: #9b51e0;
   --accent-bg: rgba(181,152,226,0.12);
   --accent-brd: rgba(181,152,226,0.30);
+  /* Text/Icon auf Accent-BG — immer dunkel, Lila ist hell genug */
+  --on-accent: #1a1a1e;
   --green:     #22c55e;
   --green-bg:  rgba(34,197,94,0.10);
   --green-brd: rgba(34,197,94,0.30);
@@ -37,6 +39,7 @@
   --accent-hover:#9b51e0;
   --accent-bg: rgba(181,152,226,0.12);
   --accent-brd: rgba(181,152,226,0.35);
+  --on-accent: #1a1a1e;
   --green:     #16a34a;
   --green-bg:  rgba(22,163,74,0.08);
   --green-brd: rgba(22,163,74,0.28);

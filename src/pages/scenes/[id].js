@@ -205,7 +205,7 @@ export default function ScenesPage() {
                   style={{
                     background: generatingAll ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
                     border: `1px solid ${T.accentBrd}`,
-                    borderRadius:9999, color: generatingAll ? T.accent : T.bg,
+                    borderRadius:9999, color: generatingAll ? T.accent : T.onAccent,
                     fontWeight:700, fontSize:13, padding:'8px 18px', cursor: generatingAll ? 'default' : 'pointer',
                     display:'flex', alignItems:'center', gap:7, transition:'all .15s', opacity: generatingAll ? 0.8 : 1,
                   }}>
@@ -226,7 +226,7 @@ export default function ScenesPage() {
                   style={{
                     background: approvingAll ? T.greenBg : `linear-gradient(135deg, ${T.green}, #16a34a)`,
                     border: `1px solid ${T.greenBrd}`,
-                    borderRadius:9999, color: approvingAll ? T.green : T.bg,
+                    borderRadius:9999, color: approvingAll ? T.green : T.onAccent,
                     fontWeight:700, fontSize:13, padding:'8px 18px', cursor: approvingAll ? 'default' : 'pointer',
                     display:'flex', alignItems:'center', gap:7, transition:'all .15s',
                   }}>
@@ -246,7 +246,7 @@ export default function ScenesPage() {
               {withImageCount > 0 && (
                 <button
                   onClick={() => router.push(`/videos/${id}`)}
-                  style={{ marginLeft:'auto', background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                  style={{ marginLeft:'auto', background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                   Weiter → Videos
                 </button>
               )}
@@ -320,7 +320,7 @@ export default function ScenesPage() {
                       </>)}
                       <div style={{ flex:1 }} />
                       <button onClick={saveSetup} disabled={savingSetup}
-                        style={{ background: T.accent, border:'none', borderRadius:9999, color:T.bg, fontSize:11, fontWeight:700, padding:'4px 14px', cursor: savingSetup ? 'default' : 'pointer', opacity: savingSetup ? 0.7 : 1 }}>
+                        style={{ background: T.accent, border:'none', borderRadius:9999, color:T.onAccent, fontSize:11, fontWeight:700, padding:'4px 14px', cursor: savingSetup ? 'default' : 'pointer', opacity: savingSetup ? 0.7 : 1 }}>
                         {savingSetup ? '…' : '💾 Speichern'}
                       </button>
                     </div>
@@ -391,7 +391,7 @@ export default function ScenesPage() {
             {withImageCount > 0 && (
               <button
                 onClick={() => router.push(`/videos/${id}`)}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                 Weiter → Videos
               </button>
             )}
@@ -724,7 +724,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       <img src={url} alt="Vorherige Szene" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }} />
                     </div>
                     <div style={{ position:'absolute', bottom:3, left:0, right:0, textAlign:'center', fontSize:8, color:'rgba(255,255,255,0.6)', fontWeight:700, background:'rgba(0,0,0,0.5)' }}>← Vorh.</div>
-                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:T.text, fontWeight:900 }}>✓</div>}
+                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:T.onAccent, fontWeight:900 }}>✓</div>}
                   </div>
                 );
               })()}
@@ -740,7 +740,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       <img src={url} alt="Nächste Szene" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }} />
                     </div>
                     <div style={{ position:'absolute', bottom:3, left:0, right:0, textAlign:'center', fontSize:8, color:'rgba(255,255,255,0.6)', fontWeight:700, background:'rgba(0,0,0,0.5)' }}>Nächste →</div>
-                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:T.text, fontWeight:900 }}>✓</div>}
+                    {isSelected && <div style={{ position:'absolute', top:3, right:3, background:T.accent, borderRadius:'50%', width:14, height:14, display:'flex', alignItems:'center', justifyContent:'center', fontSize:8, color:T.onAccent, fontWeight:900 }}>✓</div>}
                   </div>
                 );
               })()}
@@ -796,7 +796,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       onError={e => { e.target.style.opacity='0.15'; }} />
                   </div>
                   {isSelected && !isSplitTarget && (
-                    <div style={{ position:'absolute', top:4, right:4, background:T.accent, borderRadius:'50%', width:16, height:16, display:'flex', alignItems:'center', justifyContent:'center', fontSize:9, color:T.text, fontWeight:900 }}>✓</div>
+                    <div style={{ position:'absolute', top:4, right:4, background:T.accent, borderRadius:'50%', width:16, height:16, display:'flex', alignItems:'center', justifyContent:'center', fontSize:9, color:T.onAccent, fontWeight:900 }}>✓</div>
                   )}
                   <div style={{ position:'absolute', bottom:3, left:5, fontSize:9, color:'rgba(255,255,255,0.5)', fontWeight:700 }}>{labels[k] ?? String(k+1)}</div>
                   {/* ✂ Split-Button */}
@@ -812,7 +812,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       setErr('');
                     }}
                     title="Neue Szene ab diesem Screenshot erstellen"
-                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.6)', border:`1px solid ${isSplitTarget ? '#f59e0b' : T.muted}`, borderRadius:4, color: isSplitTarget ? T.bg : T.muted, fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
+                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.6)', border:`1px solid ${isSplitTarget ? '#f59e0b' : T.muted}`, borderRadius:4, color: isSplitTarget ? T.onAccent : T.muted, fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
                     ✂
                   </button>
                   {/* → Video: use this screenshot directly as the scene image */}
@@ -867,7 +867,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       onUpdate();
                     } finally { setSavingTimes(false); }
                   }} disabled={savingTimes}
-                    style={{ background:T.accent, border:'none', borderRadius:9999, color:T.bg, fontSize:10, fontWeight:700, padding:'3px 9px', cursor:'pointer' }}>
+                    style={{ background:T.accent, border:'none', borderRadius:9999, color:T.onAccent, fontSize:10, fontWeight:700, padding:'3px 9px', cursor:'pointer' }}>
                     {savingTimes ? '…' : '✓'}
                   </button>
                   <button onClick={() => { setEditingTimes(false); setEditStart(String(scene.start)); setEditEnd(String(scene.end)); }}
@@ -1084,7 +1084,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                     setHistoryIdx(lastIdx);
                     onUpdate();
                   }}
-                  style={{ fontSize:8, fontWeight:700, color:T.bg, background:T.accent, border:'none', borderRadius:9999, padding:'3px 8px', cursor:'pointer', whiteSpace:'nowrap' }}>
+                  style={{ fontSize:8, fontWeight:700, color:T.onAccent, background:T.accent, border:'none', borderRadius:9999, padding:'3px 8px', cursor:'pointer', whiteSpace:'nowrap' }}>
                   ✓ Verwenden
                 </button>
               </div>

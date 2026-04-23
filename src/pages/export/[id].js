@@ -888,7 +888,7 @@ export default function ExportPage() {
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 10,
                     background: `linear-gradient(135deg, ${T.green}, #16a34a)`,
-                    color: T.bg, fontWeight: 800, fontSize: 16,
+                    color: T.onAccent, fontWeight: 800, fontSize: 16,
                     padding: '14px 32px', borderRadius: 9999,
                     textDecoration: 'none', whiteSpace: 'nowrap',
                     boxShadow: '0 0 24px rgba(34,197,94,0.3)',
@@ -943,7 +943,7 @@ export default function ExportPage() {
                   download={exportFile}
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 4,
-                    background: T.green, color: T.bg,
+                    background: T.green, color: T.onAccent,
                     fontWeight: 700, fontSize: 12, padding: '4px 14px',
                     borderRadius: 9999, textDecoration: 'none',
                   }}>

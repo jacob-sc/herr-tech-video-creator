@@ -20,6 +20,7 @@ export const T = {
   accentHover: 'var(--accent-hover)',
   accentBg:  'var(--accent-bg)',
   accentBrd: 'var(--accent-brd)',
+  onAccent:  'var(--on-accent)',
   green:     'var(--green)',
   greenBg:   'var(--green-bg)',
   greenBrd:  'var(--green-brd)',

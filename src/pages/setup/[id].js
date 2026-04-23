@@ -367,8 +367,8 @@ export default function SetupPage() {
             </button>
             <button onClick={saveSetup} disabled={saving} style={{
               flex: 1, padding: '17px', borderRadius: 9999,
-              background: saving ? T.subtle : T.btn,
-              color: saving ? T.muted : T.text,
+              background: saving ? T.subtle : T.accent,
+              color: saving ? T.muted : T.onAccent,
               border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
               cursor: saving ? 'not-allowed' : 'pointer', transition: 'all .2s',
             }}>

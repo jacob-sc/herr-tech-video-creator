@@ -490,8 +490,8 @@ export default function HomePage() {
                 disabled={creatingManual || !manualPrompt.trim()}
                 style={{
                   marginTop: 16, width: '100%', padding: '17px', borderRadius: 9999,
-                  background: creatingManual || !manualPrompt.trim() ? T.subtle : T.btn,
-                  color: creatingManual || !manualPrompt.trim() ? T.muted : T.text,
+                  background: creatingManual || !manualPrompt.trim() ? T.subtle : T.accent,
+                  color: creatingManual || !manualPrompt.trim() ? T.muted : T.onAccent,
                   border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
                   cursor: creatingManual || !manualPrompt.trim() ? 'not-allowed' : 'pointer',
                   transition: 'all .2s',
@@ -505,8 +505,8 @@ export default function HomePage() {
                 disabled={isProcessing || (!file && !url.trim())}
                 style={{
                   marginTop: 16, width: '100%', padding: '17px', borderRadius: 9999,
-                  background: isProcessing || (!file && !url.trim()) ? T.subtle : T.btn,
-                  color: isProcessing || (!file && !url.trim()) ? T.muted : T.text,
+                  background: isProcessing || (!file && !url.trim()) ? T.subtle : T.accent,
+                  color: isProcessing || (!file && !url.trim()) ? T.muted : T.onAccent,
                   border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
                   cursor: isProcessing || (!file && !url.trim()) ? 'not-allowed' : 'pointer',
                   transition: 'all .2s',

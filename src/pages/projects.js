@@ -159,7 +159,7 @@ export default function ProjectsPage() {
           rightSlot={
             <button
               onClick={() => router.push('/')}
-              style={{ background:`linear-gradient(135deg, ${T.accent}, ${T.accentHover})`, border:'none', borderRadius:9999, color:T.text, fontWeight:700, fontSize:12, padding:'6px 14px', cursor:'pointer', whiteSpace:'nowrap' }}>
+              style={{ background:`linear-gradient(135deg, ${T.accent}, ${T.accentHover})`, border:'none', borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:12, padding:'6px 14px', cursor:'pointer', whiteSpace:'nowrap' }}>
               + Neues Projekt
             </button>
           }
@@ -201,7 +201,7 @@ export default function ProjectsPage() {
               <div style={{ fontSize:48, marginBottom:16 }}>🎬</div>
               <p style={{ color:T.muted, fontSize:16, marginBottom:24 }}>Noch keine Projekte vorhanden.</p>
               <button onClick={() => router.push('/')}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.bg, fontWeight:700, fontSize:14, padding:'12px 28px', cursor:'pointer' }}>
+                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:14, padding:'12px 28px', cursor:'pointer' }}>
                 + Erstes Projekt erstellen
               </button>
             </div>

@@ -430,7 +430,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
                       setHistoryIdx(null);
                       onUpdate?.();
                     }}
-                    style={{ fontSize:10, fontWeight:700, color:T.bg, background:T.accent, border:'none', borderRadius:9999, padding:'3px 10px', cursor:'pointer', whiteSpace:'nowrap', boxShadow:'0 2px 8px rgba(0,0,0,0.5)' }}>
+                    style={{ fontSize:10, fontWeight:700, color:T.onAccent, background:T.accent, border:'none', borderRadius:9999, padding:'3px 10px', cursor:'pointer', whiteSpace:'nowrap', boxShadow:'0 2px 8px rgba(0,0,0,0.5)' }}>
                     ✓ Verwenden
                   </button>
                 </div>
@@ -864,7 +864,7 @@ export default function VideosPage() {
                 {doneCount > 0 && (
                   <button
                     onClick={() => router.push(`/export/${id}`)}
-                    style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                    style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                     Weiter → Export
                   </button>
                 )}
@@ -881,7 +881,7 @@ export default function VideosPage() {
             <div style={{ textAlign:'center', padding:'60px 20px', color:T.muted }}>
               <div style={{ fontSize:48, marginBottom:12, opacity:.2 }}>🖼</div>
               <div style={{ fontSize:16, marginBottom:8, color:T.subtle }}>Noch keine Bilder vorhanden</div>
-              <button onClick={() => router.push(`/scenes/${id}`)} style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'9px 22px', cursor:'pointer', marginTop:8 }}>
+              <button onClick={() => router.push(`/scenes/${id}`)} style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'9px 22px', cursor:'pointer', marginTop:8 }}>
                 ← Zu den Bildern
               </button>
             </div>
@@ -918,7 +918,7 @@ export default function VideosPage() {
             {doneCount > 0 && (
               <button
                 onClick={() => router.push(`/export/${id}`)}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.text, fontWeight:700, fontSize:13, padding:'10px 28px', cursor:'pointer', boxShadow:`0 0 20px rgba(181,152,226,0.3)` }}>
+                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'10px 28px', cursor:'pointer', boxShadow:`0 0 20px rgba(181,152,226,0.3)` }}>
                 Weiter → Export 🎬
               </button>
             )}
