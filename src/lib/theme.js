@@ -14,6 +14,7 @@ export const T = {
   border:    'var(--border)',
   borderLight: 'var(--border-light)',
   subtle:    'var(--subtle)',
+  mediaBg:   'var(--media-bg)',
   text:      'var(--text)',
   muted:     'var(--muted)',
   accent:    'var(--accent)',
