@@ -247,10 +247,12 @@ async function downloadViaCobalt(url, destPath, mode = 'auto') {
     ...(mode === 'audio' ? { audioFormat: 'mp3', audioBitrate: '128' } : { videoQuality: '1080', youtubeVideoCodec: 'h264' }),
   });
 
-  // Lokale cobalt-Instanz (selbst gehostet auf Port 9000), Fallback auf public API
+  // Lokale cobalt-Instanz (selbst gehostet auf Port 9000), Fallback auf public API.
+  // Docker-Service-Namen (ohne Punkt) werden als intern behandelt → http.
   const cobaltHost = process.env.COBALT_HOST || 'localhost';
   const cobaltPort = parseInt(process.env.COBALT_PORT || '9000', 10);
-  const useHttps   = cobaltHost !== 'localhost' && cobaltHost !== '127.0.0.1';
+  const isInternal = cobaltHost === 'localhost' || cobaltHost === '127.0.0.1' || !cobaltHost.includes('.');
+  const useHttps   = !isInternal;
   const httpLib    = useHttps ? https : require('http');
 
   const cobaltUrl = await new Promise((resolve, reject) => {
