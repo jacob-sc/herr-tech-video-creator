@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { T } from '../lib/theme';
 import { useTheme } from '../lib/theme-context';
+import { useSession } from '../lib/use-session';
 
 /**
  * Zentrale Navigationsleiste.
@@ -17,8 +18,11 @@ import { useTheme } from '../lib/theme-context';
 export default function NavBar({ rightSlot, showProjectsButton = true, currentPath }) {
   const router = useRouter();
   const { theme, toggle } = useTheme();
+  const { data: session } = useSession();
 
   const backHref = readBackCookie() || 'https://world.herr.tech/dashboard/ki-toolbox';
+  const isAdmin = session?.user?.role === 'admin';
+  const adminHref = deriveAdminHref(backHref);
 
   return (
     <nav style={{
@@ -64,6 +68,24 @@ export default function NavBar({ rightSlot, showProjectsButton = true, currentPa
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
         {rightSlot}
+        {isAdmin && (
+          <a
+            href={adminHref}
+            title="Zurück zum Admin-Dashboard auf Herr Tech World"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '6px 12px', borderRadius: 9999,
+              border: `1px solid ${T.accent}`,
+              background: 'transparent',
+              color: T.accent, fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap',
+              letterSpacing: 0.3,
+              transition: 'all .15s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = T.accent; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = T.accent; }}>
+            <span aria-hidden style={{ fontSize: 10 }}>●</span> Admin
+          </a>
+        )}
         <ThemeToggle theme={theme} onClick={toggle} />
         {showProjectsButton && (
           <button
@@ -129,4 +151,18 @@ function readBackCookie() {
   const m = document.cookie.match(/(?:^|;\s*)htvc-back=([^;]+)/);
   if (!m) return null;
   try { return decodeURIComponent(m[1]); } catch { return null; }
+}
+
+/**
+ * Leitet die /admin-URL auf der herrtechgpt-Seite aus dem Back-Cookie ab.
+ * Beispiel: "https://world.herr.tech/dashboard/ki-toolbox" → "https://world.herr.tech/admin".
+ * Fallback: Live-World (world.herr.tech/admin).
+ */
+function deriveAdminHref(backHref) {
+  try {
+    const u = new URL(backHref);
+    return `${u.origin}/admin`;
+  } catch {
+    return 'https://world.herr.tech/admin';
+  }
 }
