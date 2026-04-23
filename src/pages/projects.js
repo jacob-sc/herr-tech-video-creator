@@ -1,24 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { useSession, signOut } from '../lib/use-session';
+import { useSession } from '../lib/use-session';
 import Head from 'next/head';
+import { T } from '../lib/theme';
+import NavBar from '../components/NavBar';
 
-const T = {
-  bg:        '#000000',
-  surface:   '#0d0d0d',
-  card:      '#111111',
-  border:    '#1e1e1e',
-  accent:    '#B598E2',
-  accentBg:  'rgba(181,152,226,0.08)',
-  accentBrd: 'rgba(181,152,226,0.25)',
-  text:      '#ffffff',
-  muted:     '#666666',
-  subtle:    '#222222',
-  green:     '#22c55e',
-  greenBg:   'rgba(34,197,94,0.08)',
-  greenBrd:  'rgba(34,197,94,0.25)',
-  red:       '#ef4444',
-};
 
 const PAGE_SIZE = 10;
 
@@ -157,32 +143,16 @@ export default function ProjectsPage() {
       `}</style>
 
       <div style={{ minHeight:'100vh', background:T.bg }}>
-        {/* Nav */}
-        <nav style={{ padding:'0 40px', height:64, borderBottom:`1px solid ${T.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', position:'sticky', top:0, background:T.bg, zIndex:100 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-            <img src="/herr-tech-logo.png" alt="HERR TECH" style={{ height:18, objectFit:'contain', cursor:'pointer' }} onClick={() => router.push('/')} />
-            <span style={{ color:T.muted, fontSize:13 }}>/ projekte</span>
-          </div>
-          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-            {isAdmin && (
-              <button onClick={() => router.push('/admin')}
-                style={{ background:'none', border:'1px solid #B598E244', borderRadius:9999, color:'#B598E2', fontSize:12, padding:'5px 12px', cursor:'pointer' }}>
-                Admin
-              </button>
-            )}
+        <NavBar
+          showProjectsButton={false}
+          rightSlot={
             <button
               onClick={() => router.push('/')}
-              style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:'#000', fontWeight:700, fontSize:13, padding:'8px 18px', cursor:'pointer' }}>
+              style={{ background:`linear-gradient(135deg, ${T.accent}, ${T.accentHover})`, border:'none', borderRadius:9999, color:'#fff', fontWeight:700, fontSize:12, padding:'6px 14px', cursor:'pointer', whiteSpace:'nowrap' }}>
               + Neues Projekt
             </button>
-            {session?.user && (
-              <button onClick={() => signOut({ callbackUrl: '/auth/signin' })}
-                style={{ background:'none', border:'none', color:T.muted, fontSize:12, cursor:'pointer', padding:'4px 8px' }}>
-                Abmelden
-              </button>
-            )}
-          </div>
-        </nav>
+          }
+        />
 
         <main style={{ maxWidth:960, margin:'0 auto', padding:'40px 24px 80px' }}>
           {/* Header */}

@@ -25,6 +25,8 @@ export default function SSOPage() {
         const params = new URLSearchParams(hash.slice(1));
         const access_token = params.get('at') || params.get('access_token');
         const refresh_token = params.get('rt') || params.get('refresh_token');
+        const theme = params.get('theme'); // 'light' | 'dark'
+        const back = params.get('back');   // Return-URL (staging/world/lokal)
         if (!access_token) throw new Error('access_token fehlt');
 
         const res = await fetch('/api/auth/sso', {
@@ -36,6 +38,24 @@ export default function SSOPage() {
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
           throw new Error(body.error || `SSO fehlgeschlagen (${res.status})`);
+        }
+
+        // Theme-Cookie setzen (non-httpOnly, für Client-Read)
+        if (theme === 'light' || theme === 'dark') {
+          document.cookie = `htvc-theme=${theme}; Path=/; Max-Age=${60 * 60 * 24 * 365}; SameSite=Lax; Secure`;
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+
+        // Back-URL-Cookie setzen (non-httpOnly, für Client-Read im NavBar)
+        if (back) {
+          try {
+            const u = new URL(back);
+            // Nur erlaubte Hosts akzeptieren — verhindert Open-Redirect
+            const allowedHosts = new Set(['staging.herr.tech', 'world.herr.tech', 'localhost']);
+            if (allowedHosts.has(u.hostname) || u.hostname.endsWith('.vercel.app')) {
+              document.cookie = `htvc-back=${encodeURIComponent(back)}; Path=/; Max-Age=${60 * 60 * 24 * 7}; SameSite=Lax; Secure`;
+            }
+          } catch { /* ignore */ }
         }
 
         // Hash entfernen damit Tokens nicht im Browser-History verbleiben

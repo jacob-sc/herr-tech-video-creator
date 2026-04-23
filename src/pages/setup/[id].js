@@ -1,22 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { signOut } from '../../lib/use-session';
 import Head from 'next/head';
+import { T } from '../../lib/theme';
+import NavBar from '../../components/NavBar';
 
 /* ── Design-Tokens ─────────────────────────────────────────── */
-const T = {
-  bg:        '#000000',
-  surface:   '#0d0d0d',
-  card:      '#111111',
-  border:    '#1e1e1e',
-  accent:    '#B598E2',
-  accentBg:  'rgba(181,152,226,0.08)',
-  accentBrd: 'rgba(181,152,226,0.25)',
-  btn:       '#B598E2',
-  text:      '#ffffff',
-  muted:     '#666666',
-  subtle:    '#222222',
-};
 
 const FONTS = ['Arial Bold', 'Helvetica Neue', 'Impact', 'Montserrat', 'Oswald', 'Roboto Bold'];
 const POSITIONS = [
@@ -124,19 +112,13 @@ export default function SetupPage() {
 
       <div style={{ minHeight: '100vh', background: T.bg, display: 'flex', flexDirection: 'column' }}>
 
-        {/* Nav */}
-        <nav style={{ padding: '0 40px', height: 64, borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <img src="/herr-tech-logo.png" alt="HERR TECH" style={{ height: 18, objectFit: 'contain' }} />
-            <span style={{ color: T.muted, fontSize: 13 }}>/ setup</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ color: T.muted, fontSize: 13 }}>{sceneCount} Szene{sceneCount !== 1 ? 'n' : ''} erkannt</span>
-            <span style={{ width: 1, height: 16, background: T.border }} />
-            <button onClick={() => router.push('/projects')} style={{ background:'none', border:`1px solid ${T.border}`, borderRadius:9999, color:T.muted, fontSize:12, padding:'5px 14px', cursor:'pointer' }}>Projekte</button>
-            <button onClick={() => signOut({ callbackUrl: '/auth/signin' })} style={{ background:'none', border:'none', color:T.muted, fontSize:12, cursor:'pointer', padding:'4px 8px' }}>Abmelden</button>
-          </div>
-        </nav>
+        <NavBar
+          rightSlot={
+            <span style={{ color: T.muted, fontSize: 12, whiteSpace: 'nowrap' }}>
+              {sceneCount} Szene{sceneCount !== 1 ? 'n' : ''} erkannt
+            </span>
+          }
+        />
 
         {/* Breadcrumb */}
         <div style={{ padding: '20px 40px 0', display: 'flex', alignItems: 'center', gap: 8 }}>

@@ -1,24 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { signOut } from '../../lib/use-session';
 import Head from 'next/head';
+import { T } from '../../lib/theme';
+import NavBar from '../../components/NavBar';
 
-const T = {
-  bg:        '#000000',
-  surface:   '#0d0d0d',
-  card:      '#111111',
-  border:    '#1e1e1e',
-  accent:    '#B598E2',
-  accentBg:  'rgba(181,152,226,0.08)',
-  accentBrd: 'rgba(181,152,226,0.25)',
-  text:      '#ffffff',
-  muted:     '#666666',
-  subtle:    '#222222',
-  green:     '#22c55e',
-  greenBg:   'rgba(34,197,94,0.08)',
-  greenBrd:  'rgba(34,197,94,0.25)',
-  red:       '#ef4444',
-};
 
 function fmt(sec) {
   const m = Math.floor(sec / 60).toString().padStart(2, '0');
@@ -176,20 +161,15 @@ export default function ScenesPage() {
       `}</style>
 
       <div style={{ minHeight:'100vh', background:T.bg }}>
-        {/* Nav */}
-        <nav style={{ padding:'0 40px', height:64, borderBottom:`1px solid ${T.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', position:'sticky', top:0, background:T.bg, zIndex:100 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-            <img src="/herr-tech-logo.png" alt="HERR TECH" style={{ height:18, objectFit:'contain' }} />
-            <span style={{ color:T.muted, fontSize:13 }}>/ szenen</span>
-          </div>
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            {setup && <><Pill>{setup.format ?? setupFormat}</Pill><Pill>{setup.subtitleLanguage?.toUpperCase()}</Pill></>}
-            {!setup && <Pill>{setupFormat}</Pill>}
-            {withImageCount > 0 && <span style={{ fontSize:12, color:T.muted }}>{approvedCount}/{scenes.length} freigegeben</span>}
-            <button onClick={() => router.push('/projects')} style={{ background:'none', border:`1px solid ${T.border}`, borderRadius:9999, color:T.muted, fontSize:12, padding:'5px 14px', cursor:'pointer' }}>Projekte</button>
-            <button onClick={() => signOut({ callbackUrl: '/auth/signin' })} style={{ background:'none', border:'none', color:T.muted, fontSize:12, cursor:'pointer', padding:'4px 8px' }}>Abmelden</button>
-          </div>
-        </nav>
+        <NavBar
+          rightSlot={
+            <>
+              {setup && <><Pill>{setup.format ?? setupFormat}</Pill><Pill>{setup.subtitleLanguage?.toUpperCase()}</Pill></>}
+              {!setup && <Pill>{setupFormat}</Pill>}
+              {withImageCount > 0 && <span style={{ fontSize:12, color:T.muted, whiteSpace:'nowrap' }}>{approvedCount}/{scenes.length} freigegeben</span>}
+            </>
+          }
+        />
 
         {/* Breadcrumb */}
         <Breadcrumb active={1} projectId={id} router={router} />

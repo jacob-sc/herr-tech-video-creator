@@ -1,24 +1,11 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { useSession, signOut } from '../lib/use-session';
+import { useSession } from '../lib/use-session';
 import Head from 'next/head';
+import { T } from '../lib/theme';
+import NavBar from '../components/NavBar';
 
 /* ── Design-Tokens ─────────────────────────────────────────── */
-const T = {
-  bg:        '#000000',
-  surface:   '#0d0d0d',
-  card:      '#111111',
-  border:    '#1e1e1e',
-  accent:    '#B598E2',
-  accentBg:  'rgba(181,152,226,0.08)',
-  accentBrd: 'rgba(181,152,226,0.25)',
-  btn:       '#B598E2',
-  text:      '#ffffff',
-  muted:     '#666666',
-  subtle:    '#222222',
-  green:     '#22c55e',
-  red:       '#ef4444',
-};
 
 const STEPS = [
   { id: 'uploading',    label: 'Video wird hochgeladen' },
@@ -241,33 +228,8 @@ export default function HomePage() {
 
       <div style={{ minHeight: '100vh', background: T.bg, display: 'flex', flexDirection: 'column' }}>
 
-        {/* Nav */}
-        <nav style={{ padding: '0 40px', height: 64, borderBottom: `1px solid ${T.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <img src="/herr-tech-logo.png" alt="HERR TECH" style={{ height: 18, objectFit: 'contain' }} />
-            <span style={{ color: T.muted, fontSize: 13 }}>/ social video creator</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            {isAdmin && (
-              <button onClick={() => router.push('/admin')}
-                style={{ background:'none', border:`1px solid #B598E244`, borderRadius:9999, color:'#B598E2', fontSize:12, padding:'5px 12px', cursor:'pointer' }}>
-                Admin
-              </button>
-            )}
-            <button onClick={() => router.push('/projects')}
-              style={{ background:'none', border:`1px solid ${T.border}`, borderRadius:9999, color:T.muted, fontSize:13, padding:'6px 16px', cursor:'pointer', transition:'all .15s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = T.muted; }}>
-              Meine Projekte →
-            </button>
-            {session?.user && (
-              <button onClick={() => signOut({ callbackUrl: '/auth/signin' })}
-                style={{ background:'none', border:'none', color:T.muted, fontSize:12, cursor:'pointer', padding:'4px 8px' }}>
-                Abmelden
-              </button>
-            )}
-          </div>
-        </nav>
+        <NavBar />
+        {/* Alte Sign-Out-Row entfernt — Account via herrtechgpt */}
 
         {/* Main */}
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '60px 24px 80px' }}>

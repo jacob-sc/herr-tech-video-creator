@@ -1,16 +1,64 @@
+:root {
+  --bg:        #0F0F13;
+  --surface:   #1A1A23;
+  --card:      #1A1A23;
+  --card-hover:#242432;
+  --border:    #2a2a35;
+  --border-light:#3a3a48;
+  --subtle:    #22222b;
+  --text:      #ffffff;
+  --muted:     #8a8a95;
+  --accent:    #B598E2;
+  --accent-hover: #9b51e0;
+  --accent-bg: rgba(181,152,226,0.12);
+  --accent-brd: rgba(181,152,226,0.30);
+  --green:     #22c55e;
+  --green-bg:  rgba(34,197,94,0.10);
+  --green-brd: rgba(34,197,94,0.30);
+  --red:       #ef4444;
+  --red-bg:    rgba(239,68,68,0.10);
+  --red-brd:   rgba(239,68,68,0.30);
+  --amber:     #f59e0b;
+}
+
+:root[data-theme="light"] {
+  --bg:        #F5F0EB;
+  --surface:   #FFFFFF;
+  --card:      #FFFFFF;
+  --card-hover:#F0EBE5;
+  --border:    #E3DED5;
+  --border-light:#D0CAC0;
+  --subtle:    #ECE6DE;
+  --text:      #1a1a1e;
+  --muted:     #6b6b72;
+  --accent:    #8b51e0;
+  --accent-hover:#7a3fd0;
+  --accent-bg: rgba(139,81,224,0.08);
+  --accent-brd: rgba(139,81,224,0.28);
+  --green:     #16a34a;
+  --green-bg:  rgba(22,163,74,0.08);
+  --green-brd: rgba(22,163,74,0.28);
+  --red:       #dc2626;
+  --red-bg:    rgba(220,38,38,0.08);
+  --red-brd:   rgba(220,38,38,0.28);
+  --amber:     #d97706;
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 body {
   margin: 0;
-  background: #000000;
-  color: #ffffff;
+  background: var(--bg);
+  color: var(--text);
   font-family: 'Red Hat Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color .15s ease, color .15s ease;
 }
-::selection { background: #ffffff; color: #000000; }
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
-input, textarea, button, select { font-family: inherit; }
+::selection { background: var(--accent); color: #fff; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
+input, textarea, button, select { font-family: inherit; color: var(--text); }
 a { color: inherit; text-decoration: none; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
