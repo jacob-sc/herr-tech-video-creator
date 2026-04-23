@@ -56,9 +56,8 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/next.config.js ./next.config.js
 
-# Persistente Volumes (Hetzner: docker-compose mountet named volumes)
-RUN mkdir -p /app/tmp/projects /app/uploads /app/out
-VOLUME ["/app/tmp/projects", "/app/uploads", "/app/out"]
+# Mount-Points für docker-compose Named Volumes (worker-projects, worker-uploads, worker-out)
+RUN mkdir -p /app/data/projects /app/uploads /app/out
 
 EXPOSE 3000
 ENV NODE_ENV=production \
