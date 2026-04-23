@@ -161,7 +161,11 @@ function UserRow({ u }) {
   const cell = { padding:'10px 14px', borderBottom:`1px solid ${T.border}`, whiteSpace:'nowrap' };
   const isAdminRow = u.role === 'admin';
   return (
-    <tr>
+    <tr
+      onClick={() => { window.location.href = `/admin/users/${u.id}`; }}
+      onMouseEnter={e => e.currentTarget.style.background = T.subtle}
+      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+      style={{ cursor:'pointer', transition:'background .15s' }}>
       <td style={cell}>
         <div style={{ display:'flex', flexDirection:'column' }}>
           <span style={{ color:T.text, fontWeight:600 }}>{u.email || '—'}</span>
