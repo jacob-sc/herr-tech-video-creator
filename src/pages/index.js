@@ -490,8 +490,9 @@ export default function HomePage() {
                 disabled={creatingManual || !manualPrompt.trim()}
                 style={{
                   marginTop: 16, width: '100%', padding: '17px', borderRadius: 9999,
-                  background: creatingManual || !manualPrompt.trim() ? T.subtle : T.accent,
-                  color: creatingManual || !manualPrompt.trim() ? T.muted : T.onAccent,
+                  background: T.accent,
+                  color: T.onAccent,
+                  opacity: creatingManual || !manualPrompt.trim() ? 0.5 : 1,
                   border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
                   cursor: creatingManual || !manualPrompt.trim() ? 'not-allowed' : 'pointer',
                   transition: 'all .2s',
@@ -505,8 +506,9 @@ export default function HomePage() {
                 disabled={isProcessing || (!file && !url.trim())}
                 style={{
                   marginTop: 16, width: '100%', padding: '17px', borderRadius: 9999,
-                  background: isProcessing || (!file && !url.trim()) ? T.subtle : T.accent,
-                  color: isProcessing || (!file && !url.trim()) ? T.muted : T.onAccent,
+                  background: T.accent,
+                  color: T.onAccent,
+                  opacity: isProcessing || (!file && !url.trim()) ? 0.5 : 1,
                   border: 'none', fontSize: 16, fontWeight: 800, letterSpacing: '-0.3px',
                   cursor: isProcessing || (!file && !url.trim()) ? 'not-allowed' : 'pointer',
                   transition: 'all .2s',
