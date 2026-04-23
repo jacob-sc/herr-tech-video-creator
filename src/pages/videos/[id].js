@@ -60,8 +60,8 @@ function Breadcrumb({ projectId, router }) {
               style={{
                 fontSize:12, fontWeight:700, padding:'3px 10px', borderRadius:9999,
                 background: isActive ? T.accentBg : 'transparent',
-                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.muted : T.border}`,
-                color: isActive ? T.accent : wasPastOrVisited ? T.text : T.borderLight,
+                border: `1px solid ${isActive ? T.accentBrd : T.border}`,
+                color: isActive ? T.accent : wasPastOrVisited ? T.muted : T.borderLight,
                 cursor: isClickable ? 'pointer' : 'default',
                 transition: 'all .15s',
               }}
@@ -276,7 +276,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
     }}>
 
       {/* LEFT — Image */}
-      <div style={{ borderRight:`1px solid ${T.border}`, overflow:'hidden', position:'relative', background:'#080808' }}>
+      <div style={{ borderRight:`1px solid ${T.border}`, overflow:'hidden', position:'relative', background:T.mediaBg }}>
         {imgSrc
           ? <img src={imgSrc} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
           : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', color:T.muted, fontSize:12 }}>Kein Bild</div>
@@ -390,7 +390,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
               }}
               disabled={!canGenerate || generating || generatingPrompt}
               style={{
-                background: (!canGenerate || generating || generatingPrompt) ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
+                background: (!canGenerate || generating || generatingPrompt) ? T.accentBg : T.accentGrad,
                 border: `1px solid ${canGenerate ? T.accent : T.border}`,
                 borderRadius:9999, color: canGenerate ? T.text : T.muted,
                 fontWeight:700, fontSize:12, padding:'7px 18px',
@@ -410,7 +410,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
       </div>
 
       {/* RIGHT — Video preview */}
-      <div style={{ borderLeft:`1px solid ${T.border}`, background:'#080808', display:'flex', flexDirection:'column', overflow:'hidden' }}>
+      <div style={{ borderLeft:`1px solid ${T.border}`, background:T.mediaBg, display:'flex', flexDirection:'column', overflow:'hidden' }}>
         {/* Video area */}
         <div style={{ flex:1, position:'relative', display:'flex', alignItems:'center', justifyContent:'center', minHeight:0 }}>
           {videoSrc ? (
@@ -847,7 +847,7 @@ export default function VideosPage() {
                   onClick={generateAll}
                   disabled={generatingAll || generatingCount > 0}
                   style={{
-                    background: (generatingAll || generatingCount > 0) ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
+                    background: (generatingAll || generatingCount > 0) ? T.accentBg : T.accentGrad,
                     border: `1px solid ${T.accent}`, borderRadius:9999,
                     color:T.text, fontWeight:700, fontSize:13, padding:'8px 20px',
                     cursor:(generatingAll || generatingCount > 0) ? 'not-allowed' : 'pointer',
@@ -864,7 +864,7 @@ export default function VideosPage() {
                 {doneCount > 0 && (
                   <button
                     onClick={() => router.push(`/export/${id}`)}
-                    style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                    style={{ background:T.accentGrad, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                     Weiter → Export
                   </button>
                 )}
@@ -881,7 +881,7 @@ export default function VideosPage() {
             <div style={{ textAlign:'center', padding:'60px 20px', color:T.muted }}>
               <div style={{ fontSize:48, marginBottom:12, opacity:.2 }}>🖼</div>
               <div style={{ fontSize:16, marginBottom:8, color:T.subtle }}>Noch keine Bilder vorhanden</div>
-              <button onClick={() => router.push(`/scenes/${id}`)} style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:'none', borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'9px 22px', cursor:'pointer', marginTop:8 }}>
+              <button onClick={() => router.push(`/scenes/${id}`)} style={{ background:T.accentGrad, border:'none', borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'9px 22px', cursor:'pointer', marginTop:8 }}>
                 ← Zu den Bildern
               </button>
             </div>
@@ -918,7 +918,7 @@ export default function VideosPage() {
             {doneCount > 0 && (
               <button
                 onClick={() => router.push(`/export/${id}`)}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'10px 28px', cursor:'pointer', boxShadow:`0 0 20px rgba(181,152,226,0.3)` }}>
+                style={{ background:T.accentGrad, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'10px 28px', cursor:'pointer', boxShadow:`0 0 20px rgba(181,152,226,0.3)` }}>
                 Weiter → Export 🎬
               </button>
             )}

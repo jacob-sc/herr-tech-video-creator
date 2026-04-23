@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { PROJECTS_DIR } from '../../../lib/project';
 import { requireAuth, isAdmin } from '../../../lib/api-auth';
-import { supabase } from '../../../lib/supabase';
+import { fetchUserInfoMap } from '../../../lib/user-lookup';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Nur GET' });
@@ -31,23 +31,19 @@ export default async function handler(req, res) {
     .filter(p => adminView || p.ownerId === ownerId)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-  // Für Admins: Owner-Email zu jedem Projekt hinzufügen
+  // Für Admins: Owner-Email/Name aus auth.users nachladen (in profiles gibt's das nicht)
   if (adminView) {
-    const ownerIds = [...new Set(projects.map(p => p.ownerId).filter(Boolean))];
-    let userMap = {};
-    if (ownerIds.length > 0) {
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, email, full_name')
-        .in('id', ownerIds);
-      userMap = Object.fromEntries((profiles ?? []).map(u => [u.id, u]));
-    }
+    const ownerIds = projects.map(p => p.ownerId).filter(Boolean);
+    const infoMap = await fetchUserInfoMap(ownerIds);
 
-    const enriched = projects.map(p => ({
-      ...p,
-      ownerEmail: userMap[p.ownerId]?.email ?? null,
-      ownerName: userMap[p.ownerId]?.full_name ?? null,
-    }));
+    const enriched = projects.map(p => {
+      const info = infoMap.get(p.ownerId);
+      return {
+        ...p,
+        ownerEmail: info?.email ?? null,
+        ownerName: info?.fullName ?? null,
+      };
+    });
     return res.status(200).json({ projects: enriched });
   }
 

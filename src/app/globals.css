@@ -9,6 +9,10 @@
   /* Media-Panels (Bild-Slots, Video-Preview). Bleibt auch im Light-Mode
      etwas dunkler als der Hintergrund, damit Bild-Inhalte Kontrast haben. */
   --media-bg:  #080808;
+  /* Button-Gradient im Lila-Akzent — im Dark-Mode gibt der dunklere Endpunkt
+     Tiefe; im Light-Mode wird das auf Solid umgeschaltet (siehe unten). */
+  --accent-grad: linear-gradient(135deg, #B598E2, #8b68d4);
+  --green-grad:  linear-gradient(135deg, #22c55e, #16a34a);
   --text:      #ffffff;
   --muted:     #8a8a95;
   --accent:    #B598E2;
@@ -37,6 +41,10 @@
   /* Im Light-Mode ein warmes helles Grau statt Schwarz — sonst wirken die
      Bild-Slots wie Löcher im Layout. */
   --media-bg:  #E8E2D8;
+  /* Im Light-Mode wirkt ein dunkel-werdender Gradient schmutzig — lieber
+     einen subtilen helleren-End-Punkt behalten, damit der Button lila bleibt. */
+  --accent-grad: linear-gradient(135deg, #C5AEE8, #B598E2);
+  --green-grad:  linear-gradient(135deg, #34D46F, #16a34a);
   --text:      #1a1a1e;
   --muted:     #6b6b72;
   /* Herr-Tech-Lila — identisch zu Dark-Mode, identisch zu Herr Tech World.

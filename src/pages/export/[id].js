@@ -78,8 +78,8 @@ function Breadcrumb({ projectId, router }) {
               style={{
                 fontSize: 12, fontWeight: 700, padding: '3px 10px', borderRadius: 9999,
                 background: isActive ? T.accentBg : 'transparent',
-                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.muted : T.border}`,
-                color: isActive ? T.accent : wasPastOrVisited ? T.text : T.borderLight,
+                border: `1px solid ${isActive ? T.accentBrd : T.border}`,
+                color: isActive ? T.accent : wasPastOrVisited ? T.muted : T.borderLight,
                 cursor: isClickable ? 'pointer' : 'default',
                 transition: 'all .15s',
               }}
@@ -422,7 +422,7 @@ function SceneCard({ clip, index, total, onUpdate, onMove, projectId, format,
         borderRight: `1px solid ${T.border}`,
         position: 'relative',
         display: 'flex', alignItems: 'stretch', flexDirection: 'column',
-        background: '#080808',
+        background: T.mediaBg,
       }}>
         {videoSrc ? (
           <video
@@ -887,7 +887,7 @@ export default function ExportPage() {
                   download={exportFile}
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 10,
-                    background: `linear-gradient(135deg, ${T.green}, #16a34a)`,
+                    background: T.greenGrad,
                     color: T.onAccent, fontWeight: 800, fontSize: 16,
                     padding: '14px 32px', borderRadius: 9999,
                     textDecoration: 'none', whiteSpace: 'nowrap',
@@ -968,7 +968,7 @@ export default function ExportPage() {
                 onClick={handleExport}
                 disabled={!canExport}
                 style={{
-                  background: canExport ? `linear-gradient(135deg, ${T.accent}, #8b68d4)` : T.subtle,
+                  background: canExport ? T.accentGrad : T.subtle,
                   border: `1px solid ${canExport ? T.accentBrd : T.border}`,
                   borderRadius: 9999,
                   color: canExport ? T.text : T.muted,
@@ -1101,7 +1101,7 @@ export default function ExportPage() {
               onClick={handleExport}
               disabled={!canExport}
               style={{
-                background: canExport ? `linear-gradient(135deg, ${T.accent}, #8b68d4)` : T.subtle,
+                background: canExport ? T.accentGrad : T.subtle,
                 border: `1px solid ${canExport ? T.accent : T.border}`,
                 borderRadius: 9999,
                 color: canExport ? T.text : T.muted,

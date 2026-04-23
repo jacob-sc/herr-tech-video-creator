@@ -203,7 +203,7 @@ export default function ScenesPage() {
                   onClick={generateAll}
                   disabled={generatingAll || approvingAll}
                   style={{
-                    background: generatingAll ? T.accentBg : `linear-gradient(135deg, ${T.accent}, #8b68d4)`,
+                    background: generatingAll ? T.accentBg : T.accentGrad,
                     border: `1px solid ${T.accentBrd}`,
                     borderRadius:9999, color: generatingAll ? T.accent : T.onAccent,
                     fontWeight:700, fontSize:13, padding:'8px 18px', cursor: generatingAll ? 'default' : 'pointer',
@@ -224,7 +224,7 @@ export default function ScenesPage() {
                   onClick={approveAll}
                   disabled={approvingAll || generatingAll}
                   style={{
-                    background: approvingAll ? T.greenBg : `linear-gradient(135deg, ${T.green}, #16a34a)`,
+                    background: approvingAll ? T.greenBg : T.greenGrad,
                     border: `1px solid ${T.greenBrd}`,
                     borderRadius:9999, color: approvingAll ? T.green : T.onAccent,
                     fontWeight:700, fontSize:13, padding:'8px 18px', cursor: approvingAll ? 'default' : 'pointer',
@@ -246,7 +246,7 @@ export default function ScenesPage() {
               {withImageCount > 0 && (
                 <button
                   onClick={() => router.push(`/videos/${id}`)}
-                  style={{ marginLeft:'auto', background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                  style={{ marginLeft:'auto', background:T.accentGrad, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                   Weiter → Videos
                 </button>
               )}
@@ -279,7 +279,7 @@ export default function ScenesPage() {
                       onClick={() => setupStyleInputRef.current?.click()}
                       onDragOver={e => e.preventDefault()}
                       onDrop={e => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f?.type.startsWith('image/')) uploadSetupStyleImage(f); }}
-                      style={{ width:72, height:72, borderRadius:10, border:`2px dashed ${setupStyleImagePreview ? T.accentBrd : T.border}`, background: setupStyleImagePreview ? 'transparent' : T.subtle, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', overflow:'hidden', flexShrink:0, position:'relative', transition:'border-color .15s' }}>
+                      style={{ width:72, height:72, borderRadius:10, border:`2px dashed ${setupStyleImagePreview ? T.accentBrd : T.muted}`, background: setupStyleImagePreview ? 'transparent' : T.subtle, display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', overflow:'hidden', flexShrink:0, position:'relative', transition:'border-color .15s' }}>
                       {setupStyleImageUploading
                         ? <div style={{ width:18, height:18, border:`2px solid ${T.accent}`, borderTopColor:'transparent', borderRadius:'50%', animation:'spin .7s linear infinite' }} />
                         : setupStyleImagePreview
@@ -391,7 +391,7 @@ export default function ScenesPage() {
             {withImageCount > 0 && (
               <button
                 onClick={() => router.push(`/videos/${id}`)}
-                style={{ background:`linear-gradient(135deg, ${T.accent}, #8b68d4)`, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
+                style={{ background:T.accentGrad, border:`1px solid ${T.accent}`, borderRadius:9999, color:T.onAccent, fontWeight:700, fontSize:13, padding:'8px 20px', cursor:'pointer', display:'inline-flex', alignItems:'center', gap:7 }}>
                 Weiter → Videos
               </button>
             )}
@@ -812,7 +812,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       setErr('');
                     }}
                     title="Neue Szene ab diesem Screenshot erstellen"
-                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.6)', border:`1px solid ${isSplitTarget ? '#f59e0b' : T.muted}`, borderRadius:4, color: isSplitTarget ? T.onAccent : T.muted, fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
+                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.75)', border:`1px solid ${isSplitTarget ? '#f59e0b' : 'rgba(181,152,226,0.4)'}`, borderRadius:4, color: isSplitTarget ? '#fff' : 'rgba(181,152,226,0.85)', fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
                     ✂
                   </button>
                   {/* → Video: use this screenshot directly as the scene image */}
@@ -983,7 +983,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
           {!scene.manual && <div style={{ marginTop:10, borderTop:`1px solid ${T.border}`, paddingTop:8 }}>
             <div style={{ fontSize:9, fontWeight:700, color:T.muted, letterSpacing:'0.5px', textTransform:'uppercase', marginBottom:5 }}>
               Szene anpassen
-              <span style={{ color:T.borderLight, fontWeight:400, textTransform:'none', letterSpacing:0 }}> — Referenzbild + Text werden dem Prompt hinzugefügt</span>
+              <span style={{ color:T.muted, fontWeight:400, textTransform:'none', letterSpacing:0 }}> — Referenzbild + Text werden dem Prompt hinzugefügt</span>
             </div>
             <div style={{ display:'flex', gap:8, alignItems:'flex-start' }}>
               <AdjustImageUpload
@@ -1118,7 +1118,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                 onClick={() => customUploadRef.current?.click()}
                 disabled={uploadingCustom}
                 title="Eigenes Bild hochladen (JPG/PNG/WebP) — wird direkt für Video verwendet"
-                style={{ background:'none', border:`1px dashed ${T.border}`, borderRadius:5, color: uploadingCustom ? T.accent : T.borderLight, fontSize:8, fontWeight:700, padding:'3px 7px', cursor: uploadingCustom ? 'default' : 'pointer', display:'flex', alignItems:'center', gap:3, transition:'all .15s', whiteSpace:'nowrap' }}
+                style={{ background:'none', border:`1px dashed ${T.muted}`, borderRadius:5, color: uploadingCustom ? T.accent : T.muted, fontSize:8, fontWeight:700, padding:'3px 7px', cursor: uploadingCustom ? 'default' : 'pointer', display:'flex', alignItems:'center', gap:3, transition:'all .15s', whiteSpace:'nowrap' }}
                 onMouseEnter={e => { if (!uploadingCustom) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
                 onMouseLeave={e => { if (!uploadingCustom) { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = T.borderLight; }}}>
                 {uploadingCustom
@@ -1497,7 +1497,7 @@ function AdjustImageUpload({ preview, onFile, onClear }) {
           onDrop={e => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files[0]); }}
           title="Referenzbild für Anpassung hochladen"
           style={{
-            width:72, height:72, borderRadius:8, border:`2px dashed ${dragging ? T.accent : T.border}`,
+            width:72, height:72, borderRadius:8, border:`2px dashed ${dragging ? T.accent : T.muted}`,
             background: dragging ? T.accentBg : T.card, cursor:'pointer',
             display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
             gap:3, transition:'all .15s',
@@ -1615,13 +1615,13 @@ function Breadcrumb({ active, projectId, router }) {
               style={{
                 fontSize:12, fontWeight:700, padding:'3px 10px', borderRadius:9999,
                 background: isActive ? T.accentBg : 'transparent',
-                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.muted : T.border}`,
-                color: isActive ? T.accent : wasPastOrVisited ? T.text : T.borderLight,
+                border: `1px solid ${isActive ? T.accentBrd : wasPastOrVisited ? T.border : T.border}`,
+                color: isActive ? T.accent : wasPastOrVisited ? T.muted : T.borderLight,
                 cursor: isClickable ? 'pointer' : 'default',
                 transition: 'all .15s',
               }}
               onMouseEnter={e => { if (isClickable) { e.currentTarget.style.borderColor = T.accentBrd; e.currentTarget.style.color = T.accent; }}}
-              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = T.muted; e.currentTarget.style.color = T.text; }}}>
+              onMouseLeave={e => { if (isClickable) { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = T.muted; }}}>
               {step}
             </span>
           </div>
@@ -1643,7 +1643,7 @@ function InsertBar({ insertAfterIndex, projectId, onInserted, scenes }) {
     <div style={{ margin:'2px 0', position:'relative' }}>
       {!open ? (
         <div
-          style={{ display:'flex', alignItems:'center', gap:8, transition:'opacity .2s', opacity: hovered ? 1 : 0.2 }}
+          style={{ display:'flex', alignItems:'center', gap:8, transition:'opacity .2s', opacity: hovered ? 1 : 0.55 }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}>
           <div style={{ flex:1, height:1, background: hovered ? T.accentBrd : T.border, transition:'background .2s' }} />

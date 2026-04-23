@@ -1,8 +1,9 @@
 /**
- * User-Liste für Admin-Übersicht. Verschmilzt profiles + video_creator_stats
- * + Projekt-Anzahl aus dem Dateisystem zu einer Zeile pro User.
+ * User-Liste für Admin-Übersicht. Verschmilzt profiles (role/tier) +
+ * auth.users (email/name) + video_creator_stats + Projekt-Anzahl aus dem
+ * Dateisystem zu einer Zeile pro User.
  *
- * Sortiert absteigend nach Projekt-Anzahl, dann nach Bild-Generierungen.
+ * Sortiert: Admin/Premium vorne, dann absteigend nach Projekt-Anzahl.
  */
 
 import fs from 'fs';
@@ -10,6 +11,7 @@ import path from 'path';
 import { PROJECTS_DIR } from '../../../lib/project';
 import { requireAuth, isAdmin } from '../../../lib/api-auth';
 import { supabase } from '../../../lib/supabase';
+import { fetchUserInfoMap } from '../../../lib/user-lookup';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Nur GET' });
@@ -38,16 +40,16 @@ export default async function handler(req, res) {
     }
   }
 
-  // 2) Profiles (alle) — ohne Limit, damit Admin alle sieht
+  // 2) Profiles (ohne email/name — die liegen in auth.users)
   const { data: profiles, error: pErr } = await supabase
     .from('profiles')
-    .select('id, email, full_name, role, access_tier, created_at');
+    .select('id, role, access_tier, created_at');
   if (pErr) {
     return res.status(500).json({ error: 'Konnte Profiles nicht laden', detail: pErr.message });
   }
 
   // 3) Stats
-  let statsByUser = new Map();
+  const statsByUser = new Map();
   try {
     const { data: stats } = await supabase
       .from('video_creator_stats')
@@ -57,19 +59,23 @@ export default async function handler(req, res) {
     }
   } catch {}
 
+  // 4) Email/Name aus auth.users nachladen
+  const infoMap = await fetchUserInfoMap((profiles ?? []).map(p => p.id));
+
   const users = (profiles ?? []).map(p => {
     const stats = statsByUser.get(p.id) || {};
-    const fs = ownerProjects.get(p.id) || { count: 0, latest: null, titles: [] };
+    const fsEntry = ownerProjects.get(p.id) || { count: 0, latest: null, titles: [] };
+    const info = infoMap.get(p.id) || { email: null, fullName: null };
     return {
       id: p.id,
-      email: p.email,
-      fullName: p.full_name,
+      email: info.email,
+      fullName: info.fullName,
       role: p.role ?? 'user',
       accessTier: p.access_tier ?? 'basic',
       createdAt: p.created_at,
-      projectsOnDisk: fs.count,
-      latestProjectAt: fs.latest ? new Date(fs.latest).toISOString() : null,
-      sampleTitles: fs.titles,
+      projectsOnDisk: fsEntry.count,
+      latestProjectAt: fsEntry.latest ? new Date(fsEntry.latest).toISOString() : null,
+      sampleTitles: fsEntry.titles,
       imagesGenerated: stats.images_generated ?? 0,
       videosGenerated: stats.videos_generated ?? 0,
       projectsCreatedLogged: stats.projects_created ?? 0,
