@@ -13,6 +13,11 @@
      Tiefe; im Light-Mode wird das auf Solid umgeschaltet (siehe unten). */
   --accent-grad: linear-gradient(135deg, #B598E2, #8b68d4);
   --green-grad:  linear-gradient(135deg, #22c55e, #16a34a);
+  /* Chip/Button-Overlay ueber Bildern (Scissors, → Video, Camera-Badge usw.).
+     Dark: schwarz-transparent; Light: creme-transparent damit die Chips zur
+     Herr-Tech-Pastell-Palette passen und nicht pitch-black auf dem Bild sitzen. */
+  --overlay-bg:    rgba(0,0,0,0.75);
+  --overlay-text:  rgba(255,255,255,0.9);
   --text:      #ffffff;
   --muted:     #8a8a95;
   --accent:    #B598E2;
@@ -45,6 +50,8 @@
      einen subtilen helleren-End-Punkt behalten, damit der Button lila bleibt. */
   --accent-grad: linear-gradient(135deg, #C5AEE8, #B598E2);
   --green-grad:  linear-gradient(135deg, #34D46F, #16a34a);
+  --overlay-bg:    rgba(255,255,255,0.92);
+  --overlay-text:  #1a1a1e;
   --text:      #1a1a1e;
   --muted:     #6b6b72;
   /* Herr-Tech-Lila — identisch zu Dark-Mode, identisch zu Herr Tech World.

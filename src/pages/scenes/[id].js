@@ -812,7 +812,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       setErr('');
                     }}
                     title="Neue Szene ab diesem Screenshot erstellen"
-                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : 'rgba(0,0,0,0.75)', border:`1px solid ${isSplitTarget ? '#f59e0b' : 'rgba(181,152,226,0.4)'}`, borderRadius:4, color: isSplitTarget ? '#fff' : 'rgba(181,152,226,0.85)', fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
+                    style={{ position:'absolute', bottom:3, right:4, background: isSplitTarget ? '#f59e0b' : T.overlayBg, border:`1px solid ${isSplitTarget ? '#f59e0b' : T.accentBrd}`, borderRadius:4, color: isSplitTarget ? '#fff' : T.accent, fontSize:9, padding:'1px 4px', cursor:'pointer', fontWeight:700, lineHeight:1.4 }}>
                     ✂
                   </button>
                   {/* → Video: use this screenshot directly as the scene image */}
@@ -827,7 +827,7 @@ function SceneCard({ scene, projectId, format, onUpdate, prevScene = null, nextS
                       } catch (e) { setErr(e.message); }
                     }}
                     title="Diesen Screenshot direkt als Bild für Video verwenden"
-                    style={{ position:'absolute', top:3, left:3, background:'rgba(0,0,0,0.75)', border:`1px solid rgba(181,152,226,0.4)`, borderRadius:4, color:'rgba(181,152,226,0.85)', fontSize:8, padding:'1px 5px', cursor:'pointer', fontWeight:700, lineHeight:1.4, whiteSpace:'nowrap' }}>
+                    style={{ position:'absolute', top:3, left:3, background:T.overlayBg, border:`1px solid ${T.accentBrd}`, borderRadius:4, color:T.accent, fontSize:8, padding:'1px 5px', cursor:'pointer', fontWeight:700, lineHeight:1.4, whiteSpace:'nowrap' }}>
                     → Video
                   </button>
                 </div>
@@ -1497,7 +1497,7 @@ function AdjustImageUpload({ preview, onFile, onClear }) {
           onDrop={e => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files[0]); }}
           title="Referenzbild für Anpassung hochladen"
           style={{
-            width:72, height:72, borderRadius:8, border:`2px dashed ${dragging ? T.accent : T.muted}`,
+            width:72, height:72, borderRadius:8, border:`2px dashed ${dragging ? T.accent : T.border}`,
             background: dragging ? T.accentBg : T.card, cursor:'pointer',
             display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
             gap:3, transition:'all .15s',
@@ -1543,7 +1543,7 @@ function CharImageUpload({ preview, imageFile, projectId, onFile }) {
       ) : (
         <span style={{ fontSize: dragging ? 18 : 20, opacity: dragging ? 0.8 : 0.25 }}>{dragging ? '📂' : '👤'}</span>
       )}
-      <div style={{ position:'absolute', bottom:2, right:2, background:'rgba(0,0,0,0.7)', borderRadius:3, fontSize:8, color:T.muted, padding:'1px 3px' }}>
+      <div style={{ position:'absolute', bottom:2, right:2, background:T.overlayBg, borderRadius:3, fontSize:8, color:T.accent, padding:'1px 3px', border:`1px solid ${T.accentBrd}` }}>
         {dragging ? '↓' : '📷'}
       </div>
     </div>

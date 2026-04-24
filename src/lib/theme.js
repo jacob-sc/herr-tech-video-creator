@@ -25,6 +25,8 @@ export const T = {
   onAccent:  'var(--on-accent)',
   green:     'var(--green)',
   greenGrad: 'var(--green-grad)',
+  overlayBg:   'var(--overlay-bg)',
+  overlayText: 'var(--overlay-text)',
   greenBg:   'var(--green-bg)',
   greenBrd:  'var(--green-brd)',
   red:       'var(--red)',

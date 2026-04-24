@@ -281,7 +281,7 @@ function SceneVideoCard({ scene, sceneIdx, projectId, onGenerate, onGenerateProm
           ? <img src={imgSrc} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
           : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', color:T.muted, fontSize:12 }}>Kein Bild</div>
         }
-        <div style={{ position:'absolute', top:8, left:8, background:'rgba(0,0,0,.75)', borderRadius:6, padding:'2px 7px', fontSize:10, fontWeight:700, color:T.muted }}>
+        <div style={{ position:'absolute', top:8, left:8, background:T.overlayBg, borderRadius:6, padding:'2px 7px', fontSize:10, fontWeight:700, color:T.accent, border:`1px solid ${T.accentBrd}` }}>
           #{sceneIdx + 1}
         </div>
       </div>
