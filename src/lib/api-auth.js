@@ -71,6 +71,8 @@ function extractRefreshToken(req) {
 async function requireAuth(req, res) {
   let token = extractBearerToken(req) || extractCookieToken(req);
   const refreshToken = extractRefreshToken(req);
+  // Kurzer Request-Kontext für die Logs — hilft, das Rausfliegen zuzuordnen.
+  const ctx = `path=${req.url ?? '?'} hasAT=${!!token} hasRT=${!!refreshToken}`;
 
   // Kein Access-Token mehr, aber ein Refresh-Token da → Session refreshen,
   // neue Cookies setzen, mit dem frischen Access-Token weitermachen.
@@ -83,10 +85,12 @@ async function requireAuth(req, res) {
         maxAge: refreshed.expires_in ?? 60 * 60,
       });
       token = refreshed.access_token;
+      console.info(`[auth] refreshed via RT (AT was missing) ${ctx}`);
     }
   }
 
   if (!token) {
+    console.warn(`[auth] 401 no usable token ${ctx}`);
     res.status(401).json({ error: 'Nicht autorisiert (kein Token)' });
     return { session: null, ownerId: null };
   }
@@ -95,6 +99,7 @@ async function requireAuth(req, res) {
 
   // Access-Token ist zwar da, aber expired/ungültig — einmal via Refresh retry.
   if ((error || !data?.user) && refreshToken) {
+    console.info(`[auth] AT invalid, retrying via RT ${ctx}`);
     const refreshed = await tryRefresh(refreshToken);
     if (refreshed) {
       setAuthCookies(res, {
@@ -107,6 +112,7 @@ async function requireAuth(req, res) {
   }
 
   if (error || !data?.user) {
+    console.warn(`[auth] 401 token unusable after refresh ${ctx} getUserErr=${error?.message ?? 'none'}`);
     res.status(401).json({ error: 'Nicht autorisiert (Token ungültig)' });
     return { session: null, ownerId: null };
   }
@@ -142,13 +148,21 @@ function isAdmin(session) {
 async function tryRefresh(refreshToken) {
   try {
     const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
-    if (error || !data?.session?.access_token) return null;
+    if (error || !data?.session?.access_token) {
+      // Diagnose: Warum schlug der Refresh fehl? (Reuse-Detection liefert
+      // typischerweise status 400 + "Invalid Refresh Token: Already Used".)
+      console.warn(
+        `[auth] refresh failed status=${error?.status ?? '?'} code=${error?.code ?? '?'} msg=${error?.message ?? 'no session in response'}`,
+      );
+      return null;
+    }
     return {
       access_token: data.session.access_token,
       refresh_token: data.session.refresh_token,
       expires_in: data.session.expires_in,
     };
-  } catch {
+  } catch (e) {
+    console.warn(`[auth] refresh threw: ${e?.message ?? e}`);
     return null;
   }
 }
