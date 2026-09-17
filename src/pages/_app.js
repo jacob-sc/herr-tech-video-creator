@@ -50,6 +50,8 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider>
       <Head>
+        <title>KI Video Creator | Herr Tech</title>
+        <meta name="description" content="Der KI Video Creator von Herr Tech: Skript rein, fertiges Video raus. Teil der Herr Tech World." />
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH }} />
       </Head>
       {!checked ? (
