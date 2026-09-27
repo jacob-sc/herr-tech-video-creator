@@ -3,7 +3,7 @@ const devApp = {
   name: 'herr-tech',
   script: 'node_modules/.bin/next',
   args: 'dev --port 3000',
-  cwd: '/Users/jacob/claude/herr-tech-video-creator',
+  cwd: '/Users/jacob/claude/herr-tech/apps/herr-tech-video-creator',
   interpreter: '/Users/jacob/.nvm/versions/node/v22.17.1/bin/node',
   env: {
     NODE_ENV: 'development',
