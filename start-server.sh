@@ -9,7 +9,7 @@ echo "🚀 Starte Herr Tech Server auf Port 3000..."
 $NODE $PM2 stop herr-tech 2>/dev/null
 
 # Starte neu
-$NODE $PM2 start /Users/jacob/claude/herr-tech/apps/herr-tech-video-creator/ecosystem.config.js
+$NODE $PM2 start /Users/jacob/code/herr-tech/herr-tech-video-creator/ecosystem.config.js
 
 echo ""
 echo "✅ Server läuft unter http://localhost:3000"
