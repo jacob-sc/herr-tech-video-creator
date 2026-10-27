@@ -11,6 +11,7 @@
  *   if (!session) return; // 401 bereits gesendet
  */
 
+const { createClient } = require('@supabase/supabase-js');
 const { supabase } = require('./supabase');
 
 const AT_COOKIE = 'sb-at';
@@ -145,9 +146,50 @@ function isAdmin(session) {
  * Versucht mit dem Refresh-Token eine neue Session zu holen.
  * Gibt bei Erfolg { access_token, refresh_token, expires_in } zurück, sonst null.
  */
+// refreshSession/verifyOtp legen die User-Session im Client ab. Auf dem
+// geteilten Service-Role-Client würden danach DB-Abfragen als dieser User laufen.
+function freshAuthClient() {
+  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
+/**
+ * Eigene Supabase-Session für den Worker (eigene Refresh-Token-Familie).
+ * Teilt der Worker den Refresh-Token der Plattform, rotieren beide denselben
+ * Token. Supabase wertet das nach 10 s als Reuse und widerruft die ganze
+ * Session, der User fliegt dann aus Worker UND Plattform.
+ */
+async function createWorkerSession(email) {
+  try {
+    const { data, error } = await supabase.auth.admin.generateLink({ type: 'magiclink', email });
+    const tokenHash = data?.properties?.hashed_token;
+    if (error || !tokenHash) {
+      console.warn(`[auth] generateLink failed msg=${error?.message ?? 'no hashed_token'}`);
+      return null;
+    }
+    const { data: verified, error: verifyError } = await freshAuthClient().auth.verifyOtp({
+      token_hash: tokenHash,
+      type: 'magiclink',
+    });
+    if (verifyError || !verified?.session?.access_token) {
+      console.warn(`[auth] verifyOtp failed msg=${verifyError?.message ?? 'no session'}`);
+      return null;
+    }
+    return {
+      access_token: verified.session.access_token,
+      refresh_token: verified.session.refresh_token,
+      expires_in: verified.session.expires_in,
+    };
+  } catch (e) {
+    console.warn(`[auth] createWorkerSession threw: ${e?.message ?? e}`);
+    return null;
+  }
+}
+
 async function tryRefresh(refreshToken) {
   try {
-    const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
+    const { data, error } = await freshAuthClient().auth.refreshSession({ refresh_token: refreshToken });
     if (error || !data?.session?.access_token) {
       // Diagnose: Warum schlug der Refresh fehl? (Reuse-Detection liefert
       // typischerweise status 400 + "Invalid Refresh Token: Already Used".)
@@ -215,6 +257,7 @@ module.exports = {
   requirePremium,
   setAuthCookies,
   clearAuthCookies,
+  createWorkerSession,
   extractRefreshToken,
   AT_COOKIE,
   RT_COOKIE,
