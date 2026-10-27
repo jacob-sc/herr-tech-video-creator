@@ -63,7 +63,12 @@ export default function SSOPage() {
         }
 
         // Hash entfernen damit Tokens nicht im Browser-History verbleiben
-        const next = new URLSearchParams(window.location.search).get('next') || '/projects';
+        let next = new URLSearchParams(window.location.search).get('next') || '/projects';
+        try {
+          const saved = sessionStorage.getItem('htvc-signin-next');
+          sessionStorage.removeItem('htvc-signin-next');
+          if (saved) next = saved;
+        } catch { /* ignore */ }
         window.location.replace(next);
       } catch (e) {
         setError(e.message || String(e));

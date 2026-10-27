@@ -15,7 +15,10 @@ const { createClient } = require('@supabase/supabase-js');
 const { supabase } = require('./supabase');
 
 const AT_COOKIE = 'sb-at';
-const RT_COOKIE = 'sb-rt';
+const RT_COOKIE = 'sb-wrt';
+// Bis 27.10.2026 lag hier der Refresh-Token der Plattform. Nie mehr lesen,
+// ein Refresh damit kann die Plattform-Session widerrufen. Nur noch löschen.
+const LEGACY_RT_COOKIE = 'sb-rt';
 
 function parseCookie(header) {
   const out = {};
@@ -240,14 +243,17 @@ function setAuthCookies(res, { accessToken, refreshToken, maxAge }) {
       }),
     );
   }
+  cookies.push(serializeCookie(LEGACY_RT_COOKIE, '', EXPIRED_COOKIE));
   res.setHeader('Set-Cookie', cookies);
 }
 
+const EXPIRED_COOKIE = { path: '/', expires: new Date(0), httpOnly: true, secure: true, sameSite: 'lax' };
+
 function clearAuthCookies(res) {
-  const expired = { path: '/', expires: new Date(0), httpOnly: true, secure: true, sameSite: 'lax' };
   res.setHeader('Set-Cookie', [
-    serializeCookie(AT_COOKIE, '', expired),
-    serializeCookie(RT_COOKIE, '', expired),
+    serializeCookie(AT_COOKIE, '', EXPIRED_COOKIE),
+    serializeCookie(RT_COOKIE, '', EXPIRED_COOKIE),
+    serializeCookie(LEGACY_RT_COOKIE, '', EXPIRED_COOKIE),
   ]);
 }
 

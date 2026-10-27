@@ -4,6 +4,8 @@ import Head from 'next/head';
 const DEFAULT_PLATFORM = 'https://world.herr.tech';
 const ALLOWED_HOSTS = new Set(['staging.herr.tech', 'world.herr.tech', 'localhost']);
 const LAST_REDIRECT_KEY = 'htvc-signin-redirect';
+// Die Plattform schickt immer auf /projects zurück, /sso holt das echte Ziel hier ab.
+const NEXT_KEY = 'htvc-signin-next';
 
 function platformOrigin() {
   const match = document.cookie.match(/(?:^|;\s*)htvc-back=([^;]+)/);
@@ -30,7 +32,11 @@ export default function Signin() {
       setRedirecting(false);
       return;
     }
-    try { sessionStorage.setItem(LAST_REDIRECT_KEY, String(Date.now())); } catch { /* ignore */ }
+    try {
+      sessionStorage.setItem(LAST_REDIRECT_KEY, String(Date.now()));
+      const next = new URLSearchParams(window.location.search).get('next');
+      if (next && next.startsWith('/') && !next.startsWith('//')) sessionStorage.setItem(NEXT_KEY, next);
+    } catch { /* ignore */ }
     window.location.replace(`${origin}/dashboard/ki-toolbox/video-creator`);
   }, []);
 
