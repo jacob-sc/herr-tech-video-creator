@@ -7,7 +7,7 @@
  * Optional ?next=<path> für Redirect-Ziel (default: /projects).
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
@@ -15,8 +15,12 @@ export default function SSOPage() {
   const router = useRouter();
   const [state, setState] = useState('working');
   const [error, setError] = useState('');
+  // Jeder POST auf /api/auth/sso legt eine neue Session an, der Effekt läuft aber mehrfach.
+  const started = useRef(false);
 
   useEffect(() => {
+    if (started.current) return;
+    started.current = true;
     (async () => {
       try {
         const hash = typeof window !== 'undefined' ? window.location.hash : '';
