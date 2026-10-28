@@ -9,6 +9,7 @@
     "lint": "next lint",
     "remotion:studio": "remotion studio src/remotion/index.ts",
     "remotion:test": "node scripts/test-remotion.mjs",
+    "auth:test": "node scripts/test-auth-kontowechsel.js",
     "remotion:render": "remotion render src/remotion/index.ts Herr-Tech-VideoCreator out/video.mp4"
   },
   "dependencies": {

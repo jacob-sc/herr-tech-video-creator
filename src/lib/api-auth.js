@@ -242,6 +242,10 @@ function setAuthCookies(res, { accessToken, refreshToken, maxAge }) {
         maxAge: 60 * 60 * 24 * 30, // 30 Tage
       }),
     );
+  } else {
+    // Sonst bleibt ein Refresh-Token des vorigen Users liegen und meldet ihn
+    // nach Ablauf des neuen Access-Tokens still wieder an.
+    cookies.push(serializeCookie(RT_COOKIE, '', EXPIRED_COOKIE));
   }
   cookies.push(serializeCookie(LEGACY_RT_COOKIE, '', EXPIRED_COOKIE));
   res.setHeader('Set-Cookie', cookies);
